@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 
+import {
+  withAuthenticator,
+  useAuthenticator
+} from '@aws-amplify/ui-react-native';
+
 export default class Login extends React.Component{
 
 render(): React.ReactNode {

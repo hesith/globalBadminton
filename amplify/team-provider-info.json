@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-ampglobalbadminton-dev-23941-authRole",
+      "UnauthRoleArn": "arn:aws:iam::765071966488:role/amplify-ampglobalbadminton-dev-23941-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::765071966488:role/amplify-ampglobalbadminton-dev-23941-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
+      "UnauthRoleName": "amplify-ampglobalbadminton-dev-23941-unauthRole",
+      "StackName": "amplify-ampglobalbadminton-dev-23941",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:765071966488:stack/amplify-ampglobalbadminton-dev-23941/937e7f70-3253-11ef-b6a6-02222ec9a44d",
+      "AmplifyAppId": "d3buzfwm2hseab"
+    },
+    "categories": {
+      "api": {
+        "ampglobalbadminton": {}
+      },
+      "auth": {
+        "ampglobalbadminton5b19318a": {}
+      }
+    }
+  }
+}
