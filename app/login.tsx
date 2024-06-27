@@ -1,6 +1,6 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import React, { Component } from 'react';
-import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 
 import {
@@ -8,12 +8,19 @@ import {
   useAuthenticator
 } from '@aws-amplify/ui-react-native';
 
-export default class Login extends React.Component{
+import { signIn, signUp } from 'aws-amplify/auth';
 
+import { Input, Text, Layout, Button, Icon, IconElement, CheckBox } from "@ui-kitten/components";
+
+
+
+export default class Login extends React.Component{
+  
 render(): React.ReactNode {
   return (
     <GestureHandlerRootView>
 
+<Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
     <View
       style={{
         flexDirection: 'column',
@@ -22,22 +29,29 @@ render(): React.ReactNode {
         alignItems: "center",
       }}
     >
-      <Text>Global Badminton</Text>
 
-      <View
-        style={{
-          flexDirection: 'row'
-        }}>
-        <Text>E-mail :</Text>
-        <TextInput style={styles.textInputEmail}></TextInput>
+      <View style={{ flexDirection: 'column', alignItems: 'center', alignContent: 'center' }}>
+
+        <Input placeholder="Email" status="primary" style={styles.textInputEmail}></Input>
+
+        <Input secureTextEntry placeholder="Password" status="primary" style={styles.textInputPassword}></Input>
+
+        <CheckBox checked style={styles.chkRememberMe}>Remember Me</CheckBox>
+
+        <Button style={styles.btnLogin}>Login</Button>
+
+        <Button appearance="outline" style={styles.btnSignup}>Signup</Button>
+
+
       </View>
 
      
     </View>
-
+    </Layout>
     </GestureHandlerRootView>
 
   );
 }
+
   
 }
