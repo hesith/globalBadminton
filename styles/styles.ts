@@ -1,16 +1,8 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-    textInputEmail: {
-        width: '65%',
-        marginHorizontal: 10,
-        marginVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 10
-    },
-    textInputPassword: {
-        width: '65%',
+    textInputLogin: {
+        width: '75%',
         marginHorizontal: 10,
         marginVertical: 5,
         paddingHorizontal: 10,
@@ -26,8 +18,16 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         alignContent: 'center'
     },
-    chkRememberMe:{
-        width: 200,
-        marginTop: 15,
+    viewFlexColumn:{
+        flexDirection: 'column',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center'
+    },
+    viewFlexRow:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+        marginTop: 10
     }
   });

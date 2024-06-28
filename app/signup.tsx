@@ -2,17 +2,18 @@ import { View } from "react-native";
 import React, { Component } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
-import { useNavigation } from '@react-navigation/native';
+
 import {
   withAuthenticator,
   useAuthenticator
 } from '@aws-amplify/ui-react-native';
+
 import { signIn, signUp } from 'aws-amplify/auth';
 
 import { Input, Text, Layout, Button, Icon, IconElement, CheckBox } from "@ui-kitten/components";
 
 
-const Login = ({navigation}: {navigation: any}) => {
+const Signup = () => {
 
   return (
     <GestureHandlerRootView>
@@ -29,16 +30,17 @@ const Login = ({navigation}: {navigation: any}) => {
 
       <View style={styles.viewFlexColumn}>
 
+        <Text category="h1">Sign up</Text>
+
+        <Input style={styles.textInputLogin} placeholder="First Name" status="primary" ></Input>
+        <Input style={styles.textInputLogin} placeholder="Last Name" status="primary" ></Input>
         <Input style={styles.textInputLogin} placeholder="Email" status="primary" ></Input>
         <Input style={styles.textInputLogin} placeholder="Password" status="primary" secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder="ConfirmPassword" status="primary" secureTextEntry></Input>
 
-        <View style={styles.viewFlexRow}>
-            <CheckBox checked>Remember Me</CheckBox>
-            <Text status="primary">Forgot Password?</Text>
-        </View>
+     
 
-        <Button style={styles.btnLogin}>Login</Button>
-        <Button style={styles.btnSignup} appearance="outline" onPress={()=>{navigation.navigate('Signup')}}>Signup</Button>
+        <Button style={styles.btnSignup} >Signup</Button>
 
 
       </View>
@@ -51,4 +53,4 @@ const Login = ({navigation}: {navigation: any}) => {
   );
 }
 
-export default Login;
+export default Signup;
