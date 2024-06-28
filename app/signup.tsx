@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { Component } from 'react';
+import React from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 
@@ -40,7 +40,7 @@ const Signup = () => {
 
      
 
-        <Button style={styles.btnSignup} >Signup</Button>
+        <Button style={styles.btnSignup} onPress={() => {}}>Signup</Button>
 
 
       </View>

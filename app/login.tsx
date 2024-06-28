@@ -2,12 +2,7 @@ import { View } from "react-native";
 import React, { Component } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
-import { useNavigation } from '@react-navigation/native';
-import {
-  withAuthenticator,
-  useAuthenticator
-} from '@aws-amplify/ui-react-native';
-import { signIn, signUp } from 'aws-amplify/auth';
+
 
 import { Input, Text, Layout, Button, Icon, IconElement, CheckBox } from "@ui-kitten/components";
 
