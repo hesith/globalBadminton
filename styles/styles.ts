@@ -1,12 +1,26 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
+    h1:{
+        marginVertical: 10
+    },
+    divider:{
+        alignSelf: "stretch",
+        marginVertical: 10
+    },
     textInputLogin: {
         width: '75%',
         marginHorizontal: 10,
         marginVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 10
+    },
+    selectInputLogin:{
+        width: 200,
+        marginHorizontal: 10,
+        marginVertical: 5,
+        paddingHorizontal: 10,
+        alignContent: 'center'
     },
     btnLogin:{
         width: 250,

@@ -17,5 +17,129 @@
       "service": "AppSync"
     }
   },
-  "auth": {}
+  "auth": {
+    "ampglobalbadmintond6811ddf": {
+      "customAuth": false,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage",
+          "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfPostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "GENDER",
+          "NAME"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "ampglobalbadmintond6811ddfCustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "ampglobalbadmintond6811ddfPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_ampglobalbadmintond6811ddfCustomMessage_EMAILMESSAGE": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfCustomMessage_EMAILSUBJECT": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfCustomMessage_REDIRECTURL": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfCustomMessage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfCustomMessage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfPostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_ampglobalbadmintond6811ddfPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfPostConfirmation"
+        }
+      ]
+    }
+  }
 }

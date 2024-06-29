@@ -9,14 +9,30 @@
       "UnauthRoleName": "amplify-ampglobalbadminton-dev-23941-unauthRole",
       "StackName": "amplify-ampglobalbadminton-dev-23941",
       "StackId": "arn:aws:cloudformation:ap-southeast-2:765071966488:stack/amplify-ampglobalbadminton-dev-23941/937e7f70-3253-11ef-b6a6-02222ec9a44d",
-      "AmplifyAppId": "d3buzfwm2hseab"
+      "AmplifyAppId": "d3buzfwm2hseab",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-ampglobalbadminton-dev-23941-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "api": {
         "ampglobalbadminton": {}
       },
       "auth": {
-        "ampglobalbadminton5b19318a": {}
+        "ampglobalbadminton5b19318a": {},
+        "ampglobalbadmintond6811ddf": {}
+      },
+      "function": {
+        "ampglobalbadmintond6811ddfCustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "Global Badminton ~ Verify Email address",
+          "EMAILMESSAGE": "",
+          "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
+          "s3Key": "amplify-builds/ampglobalbadmintond6811ddfCustomMessage-4f534a596c3569365643-build.zip"
+        },
+        "ampglobalbadmintond6811ddfPostConfirmation": {
+          "GROUP": "Players",
+          "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
+          "s3Key": "amplify-builds/ampglobalbadmintond6811ddfPostConfirmation-497076656f6b4a43676a-build.zip"
+        }
       }
     }
   }
