@@ -43,5 +43,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         alignContent: 'center',
         marginTop: 10
+    },
+    popoverAnchor:{
+        opacity: 0
+    },
+    errorTooltip:{
+        width: '80%',
+        height: 100
+    },
+    labelLogin:{
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
+    },
+    labelLoginIcon:{
+        width: 30,
+        height: 30
     }
   });
