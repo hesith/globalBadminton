@@ -9,6 +9,7 @@ import amplifyconfig from '..//src/amplifyconfiguration.json';
 
 import Login from './login';
 import Signup from './signup';
+import Verify from './verify';
 
 
 Amplify.configure(amplifyconfig);
@@ -26,6 +27,7 @@ const RootLayout = () => {
         <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
             <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+            <Stack.Screen name="Verify" component={Verify} options={{headerShown: false}}/>
         </Stack.Navigator>
 
     </ApplicationProvider>

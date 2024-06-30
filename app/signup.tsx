@@ -8,8 +8,9 @@ import { Input, Text, Layout, Button, Icon, IconElement, CheckBox, Select, Selec
 import { signIn, signUp } from 'aws-amplify/auth';
 
 const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+const regExUsername = /\s/g;
 
-const Signup = () => { 
+const Signup = ({navigation}: {navigation: any}) => { 
   //#region Input states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -47,10 +48,26 @@ const Signup = () => {
 
 //#region Caption
 const renderEmailCaption = () => {
-  if(!regExEmail.test(email) && email.length > 0){
+  if(!regExEmail.test(email.trim()) && email.length > 0){
     return(
       <Layout style={styles.labelLogin}>
       <Text status="danger" category="p2">Invalid Email</Text>
+        <Button
+        appearance='ghost'
+        accessoryRight={CrossIcon}  
+      />
+      </Layout>
+      )
+  }else{
+    return(<></>)
+  }
+};
+
+const renderUsernameCaption = () => {
+  if(regExUsername.test(username.trim()) && username.length > 0){
+    return(
+      <Layout style={styles.labelLogin}>
+      <Text status="danger" category="p2">Username can not contain spaces</Text>
         <Button
         appearance='ghost'
         accessoryRight={CrossIcon}  
@@ -73,7 +90,8 @@ const renderEmailCaption = () => {
         />
         </Layout>
         )
-    }else if(password.length > 7)
+    }
+    else if(password.length > 7)
       {
       return (
         <Layout style={styles.labelLogin}>
@@ -117,14 +135,13 @@ const renderEmailCaption = () => {
   };
 //#endregion
 
-  const signupPress = async (data:any) =>{ 
+const signupPress = async (data:any) =>{ 
     try
     {
+
       const {name, email, genderSelectedIndex, username, password, confirmPassword} = data;
 
       const gender = MapGender(genderSelectedIndex);
-
-      console.log(data);
 
 //#region Validation
       if(name.trim() == ""){
@@ -145,12 +162,14 @@ const renderEmailCaption = () => {
       if(username.trim() == ""){
         usernameFocusRef.current?.focus();
         return;
+      }else if(regExUsername.test(username.trim()) === true){
+        usernameFocusRef.current?.focus();
+        return;
       }
       if(password.trim() == ""){
         passwordFocusRef.current?.focus();
         return;
       }else if(password.length < 8){
-        Alert.alert("Password must be minimum 8 characters long");
         passwordFocusRef.current?.focus();
         return;
       }
@@ -170,6 +189,11 @@ const renderEmailCaption = () => {
         } )
 
         console.log(await response);
+
+        if(await response.userId?.toString().trim() != null && await response.nextStep?.signUpStep == "CONFIRM_SIGN_UP")
+        {
+          navigation.navigate('Verify', {username, password});
+        }
     }catch(e: any)
     {
           console.log(e.toString());
@@ -221,7 +245,7 @@ const renderEmailCaption = () => {
 
         <Divider style={styles.divider}/>
         
-        <Input style={styles.textInputLogin} placeholder="Username" status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder="Username" status="primary" caption={renderUsernameCaption} onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder="Password" status="primary" caption={renderPasswordCaption} onChangeText={newText => setPassword(newText)} ref={passwordFocusRef} secureTextEntry></Input>
         <Input style={styles.textInputLogin} placeholder="Confirm Password" status="primary" caption={renderConfirmPasswordCaption} onChangeText={newText => setConfirmPassword(newText)} ref={confPasswordFocusRef} secureTextEntry></Input>
         
