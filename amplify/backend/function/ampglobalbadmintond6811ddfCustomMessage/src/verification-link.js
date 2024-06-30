@@ -37,7 +37,7 @@ exports.handler = async (event) => {
     const message = `${process.env.EMAILMESSAGE}. \n ${url}`;
     event.response.smsMessage = message;
     event.response.emailSubject = process.env.EMAILSUBJECT;
-    event.response.emailMessage = message;
+    event.response.emailMessage = 'Hello'// message;
     console.log('event.response', event.response);
   }
 

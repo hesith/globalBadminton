@@ -26,7 +26,7 @@
           "EMAILSUBJECT": "Global Badminton ~ Verify Email address",
           "EMAILMESSAGE": "",
           "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
-          "s3Key": "amplify-builds/ampglobalbadmintond6811ddfCustomMessage-4f534a596c3569365643-build.zip"
+          "s3Key": "amplify-builds/ampglobalbadmintond6811ddfCustomMessage-7264624655426d39714a-build.zip"
         },
         "ampglobalbadmintond6811ddfPostConfirmation": {
           "GROUP": "Players",
