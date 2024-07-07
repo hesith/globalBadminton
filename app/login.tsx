@@ -2,9 +2,20 @@ import { View } from "react-native";
 import React, { useState } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
+import { FORGOT_PASSWORD_QuestionMark, LOGIN, PASSWORD, REMEMBER_ME, SIGNUP, USERNAME} from "../app/ShareResources/lang_resources";
+import { Input, Text, Layout, Button, CheckBox } from "@ui-kitten/components";
 
 
-import { Input, Text, Layout, Button, Icon, IconElement, CheckBox } from "@ui-kitten/components";
+//#region LANGUAGE
+const lang_id = "en";
+const txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
+const txtLOGIN = LOGIN(lang_id);
+const txtPASSWORD = PASSWORD(lang_id);
+const txtREMEMBER_ME = REMEMBER_ME(lang_id);
+const txtSIGNUP = SIGNUP(lang_id);
+const txtUSERNAME = USERNAME(lang_id);
+//#endregion
+
 
 
 const Login = ({navigation, route}: {navigation: any, route: any}) => {
@@ -28,16 +39,16 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
       <View style={styles.viewFlexColumn}>
 
-        <Input style={styles.textInputLogin} placeholder="Username" status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ></Input>
-        <Input style={styles.textInputLogin} placeholder="Password" status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ></Input>
+        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} secureTextEntry></Input>
 
         <View style={styles.viewFlexRow}>
-            <CheckBox checked>Remember Me</CheckBox>
-            <Text status="primary">Forgot Password?</Text>
+            <CheckBox checked>{txtREMEMBER_ME}</CheckBox>
+            <Text status="primary">{txtFORGOT_PASSWORD}</Text>
         </View>
 
-        <Button style={styles.btnLogin}>Login</Button>
-        <Button style={styles.btnSignup} appearance="outline" onPress={()=>{navigation.navigate('Signup')}}>Signup</Button>
+        <Button style={styles.btnLogin}>{txtLOGIN}</Button>
+        <Button style={styles.btnSignup} appearance="outline" onPress={()=>{navigation.navigate('Signup')}}>{txtSIGNUP}</Button>
 
 
       </View>

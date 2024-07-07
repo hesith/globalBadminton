@@ -2,12 +2,19 @@ import { View } from "react-native";
 import React, { useState } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
-
-
-import { Input, Text, Layout, Button, Icon, IconElement, CheckBox } from "@ui-kitten/components";
-
+import { Input, Text, Layout, Button, Icon, IconElement } from "@ui-kitten/components";
 import { confirmSignUp } from 'aws-amplify/auth';
+import { USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY } from "../app/ShareResources/lang_resources";
 
+
+//#region LANGUAGE
+const lang_id = "en";
+const txtUSERNAME = USERNAME(lang_id);
+const txtVERIFIED = VERIFIED(lang_id);
+const txtVERIFY = VERIFY(lang_id);
+const txtVERIFICATION_CODE = VERIFICATION_CODE(lang_id);
+const txtVERIFICATION_CODE_INVALID = VERIFICATION_CODE_INVALID(lang_id);
+//#endregion
 
 const Verify = ({navigation, route}: {navigation: any, route: any}) => {
   
@@ -38,7 +45,7 @@ const CheckIcon = (): IconElement => (
     if(isConfirmationCodeValid == false){
       return(
         <Layout style={styles.labelLogin}>
-        <Text status="danger" category="p2">Verification Code invalid</Text>
+        <Text status="danger" category="p2">{txtVERIFICATION_CODE_INVALID}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CrossIcon}  
@@ -48,7 +55,7 @@ const CheckIcon = (): IconElement => (
     }else if(isConfirmationCodeValid == true){
       return (
         <Layout style={styles.labelLogin}>
-        <Text status="success" category="p2">Verified</Text>
+        <Text status="success" category="p2">{txtVERIFIED}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CheckIcon}  
@@ -103,12 +110,12 @@ const CheckIcon = (): IconElement => (
     >
 
       <View style={styles.viewFlexColumn}>
-      <Text style={styles.h1} category="h1">Verify</Text>     
+      <Text style={styles.h1} category="h1">{txtVERIFY}</Text>     
 
-        <Input style={styles.textInputLogin} placeholder="Username" value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ></Input>
-        <Input style={styles.textInputLogin} placeholder="Verification Code" caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {setconfirmationCode(newText); setIsConfirmationCodeValid(null)}} ></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ></Input>
+        <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {setconfirmationCode(newText); setIsConfirmationCodeValid(null)}} ></Input>
 
-        <Button style={styles.btnLogin} onPress={()=>{VerifyPress({username, confirmationCode})}}>Verify</Button>
+        <Button style={styles.btnLogin} onPress={()=>{VerifyPress({username, confirmationCode})}}>{txtVERIFY}</Button>
 
 
       </View>

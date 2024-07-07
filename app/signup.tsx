@@ -1,11 +1,32 @@
-import { Alert, TextComponent, View } from "react-native";
-import React, {ReactElement, useRef, useState} from 'react';
+import { View } from "react-native";
+import React, { useRef, useState} from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, CheckBox, Select, SelectItem, IndexPath, Divider, InputElement, InputProps } from "@ui-kitten/components";
-
+import { CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, FEMALE, GENDER, INVALID_EMAIL, MALE, MATCH, OTHER, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PLAYER_NAME, SIGNUP, USERNAME, USERNAME_CAN_NOT_CONTAIN_SPACES} from "../app/ShareResources/lang_resources";
 
 import { signIn, signUp } from 'aws-amplify/auth';
+
+
+//#region LANGUAGE
+const lang_id = "en";
+const txtCONFIRM_PASSWORD = CONFIRM_PASSWORD(lang_id);
+const txtEMAIL = EMAIL(lang_id);
+const txtFEMALE = FEMALE(lang_id);
+const txtDOES_NOT_MATCH = DOES_NOT_MATCH(lang_id);
+const txtGENDER = GENDER(lang_id);
+const txtINVALID_EMAIL = INVALID_EMAIL(lang_id);
+const txtMALE = MALE(lang_id);
+const txtMATCH = MATCH(lang_id);
+const txtOTHER = OTHER(lang_id);
+const txtPASSWORD = PASSWORD(lang_id);
+const txtPASSWORD_STRONG = PASSWORD_Colon_STRONG(lang_id);
+const txtPASSWORD_WEAK = PASSWORD_Colon_WEAK(lang_id);
+const txtPLAYER_NAME = PLAYER_NAME(lang_id);
+const txtSIGNUP = SIGNUP(lang_id);
+const txtUSERNAME = USERNAME(lang_id);
+const txtUSERNAME_CAN_NOT_CONTAIN_SPACES = USERNAME_CAN_NOT_CONTAIN_SPACES(lang_id);
+//#endregion
 
 const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 const regExUsername = /\s/g;
@@ -51,7 +72,7 @@ const renderEmailCaption = () => {
   if(!regExEmail.test(email.trim()) && email.length > 0){
     return(
       <Layout style={styles.labelLogin}>
-      <Text status="danger" category="p2">Invalid Email</Text>
+      <Text status="danger" category="p2">{txtINVALID_EMAIL}</Text>
         <Button
         appearance='ghost'
         accessoryRight={CrossIcon}  
@@ -67,7 +88,7 @@ const renderUsernameCaption = () => {
   if(regExUsername.test(username.trim()) && username.length > 0){
     return(
       <Layout style={styles.labelLogin}>
-      <Text status="danger" category="p2">Username can not contain spaces</Text>
+      <Text status="danger" category="p2">{txtUSERNAME_CAN_NOT_CONTAIN_SPACES}</Text>
         <Button
         appearance='ghost'
         accessoryRight={CrossIcon}  
@@ -83,7 +104,7 @@ const renderUsernameCaption = () => {
     if(password.length < 8 && password.length > 0){
       return(
         <Layout style={styles.labelLogin}>
-        <Text status="danger" category="p2">Password :     Weak</Text>
+        <Text status="danger" category="p2">{txtPASSWORD_WEAK}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CrossIcon}  
@@ -95,7 +116,7 @@ const renderUsernameCaption = () => {
       {
       return (
         <Layout style={styles.labelLogin}>
-        <Text status="success" category="p2">Password :     Strong</Text>
+        <Text status="success" category="p2">{txtPASSWORD_STRONG}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CheckIcon}  
@@ -111,7 +132,7 @@ const renderUsernameCaption = () => {
     if(confirmPassword != password && confirmPassword.length > 0){
       return(
         <Layout style={styles.labelLogin}>
-        <Text status="danger" category="p2">Does not match</Text>
+        <Text status="danger" category="p2">{txtDOES_NOT_MATCH}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CrossIcon}  
@@ -122,7 +143,7 @@ const renderUsernameCaption = () => {
       {
       return (
         <Layout style={styles.labelLogin}>
-        <Text status="success" category="p2">Match</Text>
+        <Text status="success" category="p2">{txtMATCH}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CheckIcon}  
@@ -143,7 +164,7 @@ const signupPress = async (data:any) =>{
 
       const gender = MapGender(genderSelectedIndex);
 
-//#region Validation
+      //#region Validation
       if(name.trim() == ""){
         nameFocusRef.current?.focus();
         return;
@@ -207,20 +228,36 @@ const signupPress = async (data:any) =>{
     }
   }
   
-  const MapGender = (index: IndexPath | IndexPath[]) => {
+  const MapGender = (index: IndexPath | IndexPath[], isVisualRepresentaionOnly = false) => {
       let gender;
       switch ((index as IndexPath).row){
         case 0:
-          gender = "Male"
+          if(isVisualRepresentaionOnly){
+            gender = txtMALE;
+          }else{
+            gender = "Male"
+          }
           break;
         case 1:
-          gender = "Female"
+          if(isVisualRepresentaionOnly){
+            gender = txtFEMALE;
+          }else{
+            gender = "Female"
+          }
           break;
         case 2:
-          gender = "Other"
+          if(isVisualRepresentaionOnly){
+            gender = txtOTHER;
+          }else{
+            gender = "Other"
+          }
           break;
         default:
-          gender = "Gender"
+          if(isVisualRepresentaionOnly){
+            gender = txtGENDER;
+          }else{
+            gender = "Gender"
+          }
           break;
       }
       return gender;
@@ -241,26 +278,26 @@ const signupPress = async (data:any) =>{
 
       <View style={styles.viewFlexColumn}>
 
-        <Text style={styles.h1} category="h1">Sign up</Text>     
-        <Input style={styles.textInputLogin} placeholder="Player Name" status="primary" onChangeText={newText => setName(newText)} ref={nameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder="Email" status="primary" caption={renderEmailCaption} onChangeText={newText => setEmail(newText)} ref={emailFocusRef}></Input>
-        <Select style={styles.selectInputLogin} value={MapGender(genderSelectedIndex)} selectedIndex={genderSelectedIndex as IndexPath} placeholder="Gender" status="primary" onSelect={ index => setGenderSelectedIndex(index)} ref={genderFocusRef}>
-          <SelectItem title='Male'/>
-          <SelectItem title='Female' />
-          <SelectItem title='Other' />
+        <Text style={styles.h1} category="h1">{txtSIGNUP}</Text>     
+        <Input style={styles.textInputLogin} placeholder={txtPLAYER_NAME} status="primary" onChangeText={newText => setName(newText)} ref={nameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtEMAIL} status="primary" caption={renderEmailCaption} onChangeText={newText => setEmail(newText)} ref={emailFocusRef}></Input>
+        <Select style={styles.selectInputLogin} value={MapGender(genderSelectedIndex, true)} selectedIndex={genderSelectedIndex as IndexPath} placeholder={txtGENDER} status="primary" onSelect={ index => setGenderSelectedIndex(index)} ref={genderFocusRef}>
+          <SelectItem title={txtMALE}/>
+          <SelectItem title={txtFEMALE} />
+          <SelectItem title={txtOTHER} />
         </Select>
 
         <Divider style={styles.divider}/>
         
-        <Input style={styles.textInputLogin} placeholder="Username" status="primary" caption={renderUsernameCaption} onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder="Password" status="primary" caption={renderPasswordCaption} onChangeText={newText => setPassword(newText)} ref={passwordFocusRef} secureTextEntry></Input>
-        <Input style={styles.textInputLogin} placeholder="Confirm Password" status="primary" caption={renderConfirmPasswordCaption} onChangeText={newText => setConfirmPassword(newText)} ref={confPasswordFocusRef} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" caption={renderUsernameCaption} onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" caption={renderPasswordCaption} onChangeText={newText => setPassword(newText)} ref={passwordFocusRef} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtCONFIRM_PASSWORD} status="primary" caption={renderConfirmPasswordCaption} onChangeText={newText => setConfirmPassword(newText)} ref={confPasswordFocusRef} secureTextEntry></Input>
         
         <Divider style={styles.divider}/>
 
         <Button style={styles.btnSignup} onPress={() => {            
           signupPress({name, email, genderSelectedIndex, username, password, confirmPassword})
-        }}>Signup</Button>
+        }}>{txtSIGNUP}</Button>
 
       </View>   
     </View>
