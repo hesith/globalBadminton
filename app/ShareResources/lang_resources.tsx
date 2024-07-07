@@ -30,6 +30,16 @@ export function EMAIL(lang_id: string | undefined){
             return "විද්යුත් තැපෑල";
     }
 }
+export function EMAIL_ALREADY_EXISTS(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Email already exists";
+        case "en":
+            return "Email already exists";
+        case "si":
+            return "විද්යුත් තැපෑල දැනටමත් පවතී";
+    }
+}
 export function FEMALE(lang_id: string | undefined){
     switch(lang_id){
         default:

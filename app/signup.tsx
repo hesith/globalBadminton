@@ -1,17 +1,18 @@
-import { View } from "react-native";
+import { View, ImageProps } from "react-native";
 import React, { useRef, useState} from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
-import { Input, Text, Layout, Button, Icon, IconElement, CheckBox, Select, SelectItem, IndexPath, Divider, InputElement, InputProps } from "@ui-kitten/components";
-import { CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, FEMALE, GENDER, INVALID_EMAIL, MALE, MATCH, OTHER, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PLAYER_NAME, SIGNUP, USERNAME, USERNAME_CAN_NOT_CONTAIN_SPACES} from "../app/ShareResources/lang_resources";
+import { Input, Text, Layout, Button, Icon, IconElement, Spinner , Select, SelectItem, IndexPath, Divider } from "@ui-kitten/components";
+import { CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, EMAIL_ALREADY_EXISTS, FEMALE, GENDER, INVALID_EMAIL, MALE, MATCH, OTHER, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PLAYER_NAME, SIGNUP, USERNAME, USERNAME_CAN_NOT_CONTAIN_SPACES} from "../app/ShareResources/lang_resources";
 
-import { signIn, signUp } from 'aws-amplify/auth';
+import { signUp } from 'aws-amplify/auth';
 
 
 //#region LANGUAGE
 const lang_id = "en";
 const txtCONFIRM_PASSWORD = CONFIRM_PASSWORD(lang_id);
 const txtEMAIL = EMAIL(lang_id);
+const txtEMAIL_ALREADY_EXISTS = EMAIL_ALREADY_EXISTS(lang_id);
 const txtFEMALE = FEMALE(lang_id);
 const txtDOES_NOT_MATCH = DOES_NOT_MATCH(lang_id);
 const txtGENDER = GENDER(lang_id);
@@ -32,6 +33,10 @@ const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 const regExUsername = /\s/g;
 
 const Signup = ({navigation}: {navigation: any}) => { 
+
+  const [isEmailAlreadyExist, setIsEmailAlreadyExist] = useState(false);
+  const [isSignupButtonClicked, setIsSignupButtonClicked] = useState(false);
+
   //#region Input states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -50,7 +55,7 @@ const Signup = ({navigation}: {navigation: any}) => {
   const confPasswordFocusRef = useRef<any>(null);
 //#endregion
 
-//#region Icons
+//#region Icons & Accessories
   const CrossIcon = (): IconElement => (
     <Icon
       fill="#DE4637"
@@ -65,6 +70,11 @@ const Signup = ({navigation}: {navigation: any}) => {
       style = {styles.labelLoginIcon}
     />
   );
+  const LoadingIndicator = (props: any): React.ReactElement => isSignupButtonClicked? (
+        <View style={[props.style, styles.indicator]}>
+      <Spinner status="control" size='large' />
+    </View> 
+) : <></>;
 //#endregion
 
 //#region Caption
@@ -79,7 +89,18 @@ const renderEmailCaption = () => {
       />
       </Layout>
       )
-  }else{
+  }else if(isEmailAlreadyExist && !isSignupButtonClicked){
+      return(
+        <Layout style={styles.labelLogin}>
+        <Text status="danger" category="p2">{txtEMAIL_ALREADY_EXISTS}</Text>
+          <Button
+          appearance='ghost'
+          accessoryRight={CrossIcon}  
+        />
+        </Layout>
+        )
+  }
+  else{
     return(<></>)
   }
 };
@@ -101,34 +122,40 @@ const renderUsernameCaption = () => {
 };
 
   const renderPasswordCaption = () => {
-    if(password.length < 8 && password.length > 0){
-      return(
-        <Layout style={styles.labelLogin}>
-        <Text status="danger" category="p2">{txtPASSWORD_WEAK}</Text>
-          <Button
-          appearance='ghost'
-          accessoryRight={CrossIcon}  
-        />
-        </Layout>
-        )
-    }
-    else if(password.length > 7)
-      {
-      return (
-        <Layout style={styles.labelLogin}>
-        <Text status="success" category="p2">{txtPASSWORD_STRONG}</Text>
-          <Button
-          appearance='ghost'
-          accessoryRight={CheckIcon}  
-        />
-        </Layout>
-        );
+    if(!isSignupButtonClicked){
+      if(password.length < 8 && password.length > 0){
+        return(
+          <Layout style={styles.labelLogin}>
+          <Text status="danger" category="p2">{txtPASSWORD_WEAK}</Text>
+            <Button
+            appearance='ghost'
+            accessoryRight={CrossIcon}  
+          />
+          </Layout>
+          )
+      }
+      else if(password.length > 7)
+        {
+        return (
+          <Layout style={styles.labelLogin}>
+          <Text status="success" category="p2">{txtPASSWORD_STRONG}</Text>
+            <Button
+            appearance='ghost'
+            accessoryRight={CheckIcon}  
+          />
+          </Layout>
+          );
+      }else{
+        return(<></>);
+      }
     }else{
-      return(<></>)
-    }
+      return(<></>);
+    } 
+  
   };
 
   const renderConfirmPasswordCaption = () => {
+    if(!isSignupButtonClicked){
     if(confirmPassword != password && confirmPassword.length > 0){
       return(
         <Layout style={styles.labelLogin}>
@@ -153,12 +180,16 @@ const renderUsernameCaption = () => {
     }else{
       return(<></>)
     }
-  };
+  }else{
+    return(<></>)
+  }
+};
 //#endregion
 
 const signupPress = async (data:any) =>{ 
     try
     {
+      setIsSignupButtonClicked(true);
 
       const {name, email, genderSelectedIndex, username, password, confirmPassword} = data;
 
@@ -167,38 +198,48 @@ const signupPress = async (data:any) =>{
       //#region Validation
       if(name.trim() == ""){
         nameFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
       if(email.trim() == ""){
         emailFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }else if(regExEmail.test(email.trim()) === false){
         emailFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
       if(gender.trim() == "Gender"){
         genderFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
       if(username.trim() == ""){
         usernameFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }else if(regExUsername.test(username.trim()) === true){
         usernameFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
       if(password.trim() == ""){
         passwordFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }else if(password.length < 8){
         passwordFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
       if(confirmPassword.trim() == ""){
         confPasswordFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }else if (confirmPassword != password){
         confPasswordFocusRef.current?.focus();
+        setIsSignupButtonClicked(false);
         return;
       }
 //#endregion
@@ -221,10 +262,14 @@ const signupPress = async (data:any) =>{
         console.log(e.toString());
 
         if(e.toString().split(": ")[1] == "PreSignUp failed with error Email already exists."){
+          setIsEmailAlreadyExist(true);
+          emailFocusRef.current?.focus();     
           console.log("Email Already Exist");
         }else if(e.toString().split(": ")[1] == "User already exists"){
           console.log("Username Already Exist");
         }
+
+        setIsSignupButtonClicked(false);
     }
   }
   
@@ -280,7 +325,7 @@ const signupPress = async (data:any) =>{
 
         <Text style={styles.h1} category="h1">{txtSIGNUP}</Text>     
         <Input style={styles.textInputLogin} placeholder={txtPLAYER_NAME} status="primary" onChangeText={newText => setName(newText)} ref={nameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder={txtEMAIL} status="primary" caption={renderEmailCaption} onChangeText={newText => setEmail(newText)} ref={emailFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtEMAIL} status="primary" caption={renderEmailCaption} onChangeText={newText => {setEmail(newText); setIsEmailAlreadyExist(false);}} ref={emailFocusRef}></Input>
         <Select style={styles.selectInputLogin} value={MapGender(genderSelectedIndex, true)} selectedIndex={genderSelectedIndex as IndexPath} placeholder={txtGENDER} status="primary" onSelect={ index => setGenderSelectedIndex(index)} ref={genderFocusRef}>
           <SelectItem title={txtMALE}/>
           <SelectItem title={txtFEMALE} />
@@ -295,7 +340,7 @@ const signupPress = async (data:any) =>{
         
         <Divider style={styles.divider}/>
 
-        <Button style={styles.btnSignup} onPress={() => {            
+        <Button style={styles.btnSignup} accessoryRight={LoadingIndicator} onPress={() => {            
           signupPress({name, email, genderSelectedIndex, username, password, confirmPassword})
         }}>{txtSIGNUP}</Button>
 

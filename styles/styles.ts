@@ -60,5 +60,10 @@ export const styles = StyleSheet.create({
     labelLoginIcon:{
         width: 30,
         height: 30
+    },
+    indicator: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: 'white'
     }
   });
