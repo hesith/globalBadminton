@@ -32,6 +32,10 @@
           "GROUP": "Players",
           "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
           "s3Key": "amplify-builds/ampglobalbadmintond6811ddfPostConfirmation-497076656f6b4a43676a-build.zip"
+        },
+        "emailValidationOnSignup": {
+          "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
+          "s3Key": "amplify-builds/emailValidationOnSignup-7369312b47535a515348-build.zip"
         }
       }
     }

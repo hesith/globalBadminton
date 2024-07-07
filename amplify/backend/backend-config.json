@@ -74,6 +74,43 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "emailValidationOnSignup": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "ampglobalbadminton"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "ampglobalbadmintond6811ddf"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfCustomMessage"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "ampglobalbadmintond6811ddfPostConfirmation"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -138,6 +175,22 @@
         {
           "category": "function",
           "resourceName": "ampglobalbadmintond6811ddfPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_emailValidationOnSignup_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emailValidationOnSignup"
+        }
+      ]
+    },
+    "AMPLIFY_function_emailValidationOnSignup_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emailValidationOnSignup"
         }
       ]
     }

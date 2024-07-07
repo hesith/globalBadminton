@@ -185,9 +185,10 @@ const signupPress = async (data:any) =>{
         const response = await signUp({
           username,
           password,  
-          options: {userAttributes:{email, gender, name}}      
+          options: {userAttributes:{email, gender, name}}    
         } )
 
+        
         console.log(await response);
 
         if(await response.userId?.toString().trim() != null && await response.nextStep?.signUpStep == "CONFIRM_SIGN_UP")
@@ -196,7 +197,13 @@ const signupPress = async (data:any) =>{
         }
     }catch(e: any)
     {
-          console.log(e.toString());
+        console.log(e.toString());
+
+        if(e.toString().split(": ")[1] == "PreSignUp failed with error Email already exists."){
+          console.log("Email Already Exist");
+        }else if(e.toString().split(": ")[1] == "User already exists"){
+          console.log("Username Already Exist");
+        }
     }
   }
   

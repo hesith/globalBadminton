@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "api": {
+      "ampglobalbadminton": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "auth": {
+      "ampglobalbadmintond6811ddf": [
+        "read"
+      ]
+    },
+    "function": {
+      "ampglobalbadmintond6811ddfCustomMessage": [
+        "read"
+      ],
+      "ampglobalbadmintond6811ddfPostConfirmation": [
+        "read"
+      ]
+    },
+    "storage": {
+      "Todo:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
