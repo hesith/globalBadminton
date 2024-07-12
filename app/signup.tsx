@@ -1,5 +1,5 @@
-import { View, ImageProps } from "react-native";
-import React, { useRef, useState} from 'react';
+import { View, BackHandler, Alert } from "react-native";
+import React, { useRef, useState, useEffect} from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner , Select, SelectItem, IndexPath, Divider } from "@ui-kitten/components";
@@ -33,6 +33,22 @@ const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 const regExUsername = /\s/g;
 
 const Signup = ({navigation}: {navigation: any}) => { 
+
+  //#region BackHandler
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+  //#endregion  
 
   const [isEmailAlreadyExist, setIsEmailAlreadyExist] = useState(false);
   const [isSignupButtonClicked, setIsSignupButtonClicked] = useState(false);

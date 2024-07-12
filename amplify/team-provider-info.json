@@ -35,7 +35,7 @@
         },
         "emailValidationOnSignup": {
           "deploymentBucketName": "amplify-ampglobalbadminton-dev-23941-deployment",
-          "s3Key": "amplify-builds/emailValidationOnSignup-37736a4f64465971492b-build.zip"
+          "s3Key": "amplify-builds/emailValidationOnSignup-686c516438564835486d-build.zip"
         }
       }
     }

@@ -1,5 +1,25 @@
 
 //#region Resources
+export function ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "All you have entered will be lost. Are you sure?";
+        case "en":
+            return "All you have entered will be lost. Are you sure?";
+        case "si":
+            return "ඔබ ඇතුළු කර ඇති සියල්ල අහිමි වනු ඇත. ඔබට විශ්වාස ද?";
+    }
+}
+export function CANCEL(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Cancel";
+        case "en":
+            return "Cancel";
+        case "si":
+            return "අවලංගු කරන්න";
+    }
+}
 export function CONFIRM_PASSWORD(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -180,6 +200,16 @@ export function SIGNUP(lang_id: string | undefined){
             return "ලියාපදිංචි වන්න";
     }
 }
+export function START_OVER_QuestionMark(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Start Over?";
+        case "en":
+            return "Start Over?";
+        case "si":
+            return "නැවත ආරම්භ කරන්න?";
+    }
+}
 export function USERNAME(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -238,6 +268,16 @@ export function VERIFICATION_CODE_INVALID(lang_id: string | undefined){
             return "Verification Code Invalid";
         case "si":
             return "සත්‍යාපන කේතය වලංගු නැත";
+    }
+}
+export function YES_Uppercase(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "YES";
+        case "en":
+            return "YES";
+        case "si":
+            return "ඔව්";
     }
 }
 //#endregion

@@ -1,23 +1,48 @@
-import { View } from "react-native";
-import React, { useState } from 'react';
+import { View, BackHandler, Alert } from "react-native";
+import React, { useState, useEffect } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement } from "@ui-kitten/components";
 import { confirmSignUp } from 'aws-amplify/auth';
-import { USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY } from "../app/ShareResources/lang_resources";
+import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../app/ShareResources/lang_resources";
 
 
 //#region LANGUAGE
 const lang_id = "en";
+const txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST = ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id);
+const txtCANCEL = CANCEL(lang_id);
+const txtSTART_OVER = START_OVER_QuestionMark(lang_id);
 const txtUSERNAME = USERNAME(lang_id);
 const txtVERIFIED = VERIFIED(lang_id);
 const txtVERIFY = VERIFY(lang_id);
 const txtVERIFICATION_CODE = VERIFICATION_CODE(lang_id);
 const txtVERIFICATION_CODE_INVALID = VERIFICATION_CODE_INVALID(lang_id);
+const txtYES = YES_Uppercase(lang_id);
 //#endregion
 
 const Verify = ({navigation, route}: {navigation: any, route: any}) => {
   
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert(txtSTART_OVER, txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST, [
+        {
+          text: txtCANCEL,
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: txtYES, onPress: () => navigation.navigate("Login")},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   const password = route.params?.password;
   const [username, setUsername] = useState(route.params?.username);
   const [confirmationCode, setconfirmationCode] = useState('');

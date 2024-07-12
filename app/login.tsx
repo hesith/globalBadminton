@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import React, { useState } from 'react';
+import { View, BackHandler } from "react-native";
+import React, { useState, useEffect } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 import { FORGOT_PASSWORD_QuestionMark, LOGIN, PASSWORD, REMEMBER_ME, SIGNUP, USERNAME} from "../app/ShareResources/lang_resources";
@@ -19,6 +19,22 @@ const txtUSERNAME = USERNAME(lang_id);
 
 
 const Login = ({navigation, route}: {navigation: any, route: any}) => {
+
+  //#region BackHandler
+   useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+  //#endregion
 
   const [username, setUsername] = useState(route.params?.username.trim() != "" ? route.params?.username : "");
   const [password, setPassword] = useState(route.params?.password.trim() != "" ? route.params?.password : "");
