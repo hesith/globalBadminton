@@ -65,5 +65,11 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       color: 'white'
-    }
+    },
+    logoLogin: {
+        marginBottom: 10,
+        marginTop: 10,
+        width: 200,
+        height: 200
+      }
   });

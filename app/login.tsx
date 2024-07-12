@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
 import { FORGOT_PASSWORD_QuestionMark, LOGIN, PASSWORD, REMEMBER_ME, SIGNUP, USERNAME} from "../app/ShareResources/lang_resources";
-import { Input, Text, Layout, Button, CheckBox } from "@ui-kitten/components";
+import { Input, Text, Layout, Button, CheckBox, Avatar } from "@ui-kitten/components";
 
 
 //#region LANGUAGE
@@ -38,6 +38,8 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
     >
 
       <View style={styles.viewFlexColumn}>
+
+        <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../assets/images/logo.png')}/>
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ></Input>
         <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} secureTextEntry></Input>
