@@ -14,9 +14,9 @@ Amplify Params - DO NOT EDIT */
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-const cognitoIdentityProviderClient = require("@aws-sdk/client-cognito-identity-provider");
+const {CognitoIdentityProviderClient, ListUsersCommand, AdminDeleteUserCommand} = require("@aws-sdk/client-cognito-identity-provider");
 
-const client = new cognitoIdentityProviderClient.CognitoIdentityProviderClient();
+const client = new CognitoIdentityProviderClient();
 
 exports.handler = async (event, context) => {
   
@@ -28,16 +28,26 @@ exports.handler = async (event, context) => {
     "email"
   ],
   "Filter": emailFilter,
-  "Limit": 1,
   "UserPoolId": userPoolId
   };
 
-  const command = new cognitoIdentityProviderClient.ListUsersCommand(input);
-  const response = await client.send(command);
+  const listUsersCommand = new ListUsersCommand(input);
+  const listUsersResponse = await client.send(listUsersCommand);
 
+  if(await listUsersResponse.Users.length > 0 && await listUsersResponse.Users[0].UserStatus == 'UNCONFIRMED'){
+    
+          var userParams = {
+              UserPoolId: userPoolId,
+              Username: listUsersResponse.Users[0].Username,
+            };
+          
+          const adminDeleteUserCommand = new AdminDeleteUserCommand(userParams);
+          const adminDeleteUserResponse = client.send(adminDeleteUserCommand);
+          
+  }
 
-  if(await response.Users.length > 0){
-       context.done("Email already exists", event);
+  if(await listUsersResponse.Users.length > 0 && await listUsersResponse.Users[0].UserStatus == 'CONFIRMED'){
+       context.done("Email already exists", null);
   }else{
        context.succeed(event);
   }
