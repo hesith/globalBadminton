@@ -60,6 +60,10 @@ export const styles = StyleSheet.create({
     labelLoginIcon:{
         width: 30,
         height: 30
+    },    
+    labelLoginIcon2:{
+        width: 20,
+        height: 20
     },
     indicator: {
       justifyContent: 'center',
@@ -71,5 +75,26 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         width: 200,
         height: 200
-      }
+      },
+    settingIconLogin: {
+        width: 50,
+        height: 50,
+    },
+    btnSettingLogin: {
+        alignSelf:'flex-end',
+        marginTop: 40,
+        marginRight: 10,
+        borderRadius: 50,
+        width: 50,
+        height: 50,
+        opacity: 0.4,
+    },
+    selectLanguageLogin: {
+        alignSelf:'flex-end',
+        opacity: 0,
+        width: 120
+    },
+    selectItemLanguageLogin: {
+  
+    }
   });

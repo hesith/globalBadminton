@@ -1,4 +1,5 @@
 
+
 //#region Resources
 export function ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id: string | undefined){
     switch(lang_id){
@@ -58,6 +59,16 @@ export function EMAIL_ALREADY_EXISTS(lang_id: string | undefined){
             return "Email already exists";
         case "si":
             return "විද්යුත් තැපෑල දැනටමත් පවතී";
+    }
+}
+export function ENGLISH_inEnglish(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "English";
+        case "en":
+            return "English";
+        case "si":
+            return "English";
     }
 }
 export function FEMALE(lang_id: string | undefined){
@@ -198,6 +209,16 @@ export function SIGNUP(lang_id: string | undefined){
             return "Signup";
         case "si":
             return "ලියාපදිංචි වන්න";
+    }
+}
+export function SINHALA_inSinhala(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "සිංහල";
+        case "en":
+            return "සිංහල";
+        case "si":
+            return "සිංහල";
     }
 }
 export function START_OVER_QuestionMark(lang_id: string | undefined){
