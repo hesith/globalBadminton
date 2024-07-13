@@ -9,7 +9,7 @@ import { signUp } from 'aws-amplify/auth';
 
 
 //#region LANGUAGE
-const lang_id = "en";
+const lang_id = global.lang_id;
 const txtCONFIRM_PASSWORD = CONFIRM_PASSWORD(lang_id);
 const txtEMAIL = EMAIL(lang_id);
 const txtEMAIL_ALREADY_EXISTS = EMAIL_ALREADY_EXISTS(lang_id);

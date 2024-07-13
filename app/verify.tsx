@@ -8,7 +8,7 @@ import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, C
 
 
 //#region LANGUAGE
-const lang_id = "en";
+const lang_id = global.lang_id;
 const txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST = ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id);
 const txtCANCEL = CANCEL(lang_id);
 const txtSTART_OVER = START_OVER_QuestionMark(lang_id);

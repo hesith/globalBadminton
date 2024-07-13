@@ -28,7 +28,7 @@ const CheckIcon = (isSelected: boolean): IconElement => ( isSelected?
 const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
   //#region LANGUAGE
-  const [lang_id, setLanguageId] = useState(UserSettings.getLangId().toString());
+  const[lang_id, setLanguageId] = useState(global.lang_id);
   var txtENGLISH = ENGLISH_inEnglish(lang_id);
   var txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
   var txtLOGIN = LOGIN(lang_id);
