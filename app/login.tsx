@@ -55,11 +55,26 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   }, []);
   //#endregion
 
+  //#region Get Saved language
+  const GetSavedLanguage = (lang_setting : string) => {
+    switch (lang_setting){
+        case "en":
+          return 0;
+        case "si":
+          return 1;
+        default:
+          return 0;
+    }
+  }
+  //#endregion
+  
   //#region Input States
   const [username, setUsername] = useState(route.params?.username.trim() != "" ? route.params?.username : "");
   const [password, setPassword] = useState(route.params?.password.trim() != "" ? route.params?.password : "");
-  const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(0));
+  //const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(0));
+  const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(GetSavedLanguage(global.lang_id)));
   //#endregion
+
 
   //#region References
   const languageFocusRef = useRef<any>(null); 
