@@ -101,6 +101,16 @@ export function GENDER(lang_id: string | undefined){
             return "ස්ත්රී පුරුෂ භාවය";
     }
 }
+export function HAS_BEEN_SET_FullStop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "has been set.";
+        case "en":
+            return "has been set.";
+        case "si":
+            return "සකසා ඇත.";
+    }
+}
 export function INVALID_EMAIL(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -139,6 +149,16 @@ export function MATCH(lang_id: string | undefined){
             return "Match";
         case "si":
             return "ගැලපේ";
+    }
+}
+export function OK(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Ok";
+        case "en":
+            return "Ok";
+        case "si":
+            return "හරි";
     }
 }
 export function OTHER(lang_id: string | undefined){
@@ -189,6 +209,16 @@ export function PLAYER_NAME(lang_id: string | undefined){
             return "Player Name";
         case "si":
             return "ක්රීඩකයාගේ නම";
+    }
+}
+export function PLEASE_RESTART_THE_APPLICATION_FullStop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Please restart the application.";
+        case "en":
+            return "Please restart the application.";
+        case "si":
+            return "කරුණාකර යෙදුම නැවත ආරම්භ කරන්න.";
     }
 }
 export function REMEMBER_ME(lang_id: string | undefined){

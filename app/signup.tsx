@@ -7,9 +7,13 @@ import { CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, EMAIL_ALREADY_EXISTS, FEMALE, 
 
 import { signUp } from 'aws-amplify/auth';
 
+const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+const regExUsername = /\s/g;
 
-//#region LANGUAGE
-const lang_id = global.lang_id;
+const Signup = ({navigation}: {navigation: any}) => { 
+
+// //#region LANGUAGE
+const[lang_id, setLanguageId] = useState(global.lang_id);
 const txtCONFIRM_PASSWORD = CONFIRM_PASSWORD(lang_id);
 const txtEMAIL = EMAIL(lang_id);
 const txtEMAIL_ALREADY_EXISTS = EMAIL_ALREADY_EXISTS(lang_id);
@@ -27,12 +31,7 @@ const txtPLAYER_NAME = PLAYER_NAME(lang_id);
 const txtSIGNUP = SIGNUP(lang_id);
 const txtUSERNAME = USERNAME(lang_id);
 const txtUSERNAME_CAN_NOT_CONTAIN_SPACES = USERNAME_CAN_NOT_CONTAIN_SPACES(lang_id);
-//#endregion
-
-const regExEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-const regExUsername = /\s/g;
-
-const Signup = ({navigation}: {navigation: any}) => { 
+// //#endregion
 
   //#region BackHandler
   useEffect(() => {

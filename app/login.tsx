@@ -1,17 +1,17 @@
-import { View, BackHandler } from "react-native";
+import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../styles/styles";
-import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, LOGIN, PASSWORD, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../app/ShareResources/lang_resources";
+import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../app/ShareResources/lang_resources";
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import * as UserSettings from './AsyncStorage/user_settings';
 
 
 //#region Icons & Accessories
-const SettingIcon = (): IconElement => (
+const TextIcon = (): IconElement => (
   <Icon
     fill="black"
-    name='settings'
+    name='text'
     style = {styles.settingIconLogin}
   />
 );
@@ -29,14 +29,17 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
   //#region LANGUAGE
   const[lang_id, setLanguageId] = useState(global.lang_id);
-  var txtENGLISH = ENGLISH_inEnglish(lang_id);
-  var txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
-  var txtLOGIN = LOGIN(lang_id);
-  var txtPASSWORD = PASSWORD(lang_id);
-  var txtREMEMBER_ME = REMEMBER_ME(lang_id);
-  var txtSIGNUP = SIGNUP(lang_id);
-  var txtSINHALA = SINHALA_inSinhala(lang_id);
-  var txtUSERNAME = USERNAME(lang_id);
+  const txtENGLISH = ENGLISH_inEnglish(lang_id);
+  const txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
+  const txtHAS_BEEN_SET = HAS_BEEN_SET_FullStop(lang_id);
+  const txtLOGIN = LOGIN(lang_id);
+  const txtOK = OK(lang_id);
+  const txtPASSWORD = PASSWORD(lang_id);
+  const txtPLEASE_RESTART_THE_APPLICATION = PLEASE_RESTART_THE_APPLICATION_FullStop(lang_id);
+  const txtREMEMBER_ME = REMEMBER_ME(lang_id);
+  const txtSIGNUP = SIGNUP(lang_id);
+  const txtSINHALA = SINHALA_inSinhala(lang_id);
+  const txtUSERNAME = USERNAME(lang_id);
   //#endregion
 
   //#region BackHandler
@@ -71,7 +74,6 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   //#region Input States
   const [username, setUsername] = useState(route.params?.username.trim() != "" ? route.params?.username : "");
   const [password, setPassword] = useState(route.params?.password.trim() != "" ? route.params?.password : "");
-  //const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(0));
   const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(GetSavedLanguage(global.lang_id)));
   //#endregion
 
@@ -90,7 +92,13 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
     {
       setSelectedLang(index);
       UserSettings.setLangId(MapLangId(index));
-      setLanguageId(MapLangId(index));
+      Alert.alert(`${ MapLangId(index, true) } ${txtHAS_BEEN_SET}`, txtPLEASE_RESTART_THE_APPLICATION, [
+        {
+          text: txtOK,
+          onPress: () => null,
+          style: 'cancel',
+        }
+      ]);
     }
     catch (e: any)
     {
@@ -98,17 +106,32 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
     }
   }
 
-  const MapLangId = (index: IndexPath | IndexPath[]) => {
+  const MapLangId = (index: IndexPath | IndexPath[], isVisualRepresentaionOnly = false) => {
     let langId;
     switch ((index as IndexPath).row){
       case 0:
-          langId = "en"
+         if(isVisualRepresentaionOnly)
+         {
+            langId = txtENGLISH
+         }else{
+            langId = "en"
+         }
          break;
       case 1:
-          langId = "si"
+          if(isVisualRepresentaionOnly)
+          {
+            langId = txtSINHALA
+          }else{
+            langId = "si"
+          }
           break;
       default:
-          langId = "en";
+          if(isVisualRepresentaionOnly)
+          {
+            langId = txtENGLISH
+          }else{
+            langId = "en"
+          }
           break;
     }
     return langId;
@@ -124,7 +147,7 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
           <SelectItem style={styles.selectItemLanguageLogin} accessoryRight={CheckIcon((selectedLang as IndexPath).row == 0)} title={txtENGLISH}/>
           <SelectItem style={styles.selectItemLanguageLogin} accessoryRight={CheckIcon((selectedLang as IndexPath).row == 1)} title={txtSINHALA} /> 
     </Select>
-<Button style={styles.btnSettingLogin} appearance="ghost" accessoryRight={SettingIcon} onPress={SettingButtonPressed}/>
+<Button style={styles.btnSettingLogin} appearance="ghost" accessoryRight={TextIcon} onPress={SettingButtonPressed}/>
 </View>
 
 
