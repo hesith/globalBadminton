@@ -131,6 +131,7 @@ const onVerificationCodeChanged = (text: string) => {
 
   const VerifyPress = async (data:any) => {
     try{
+      setIsSignupButtonClicked(true);
 
       const {username, confirmationCode} = data;
 
@@ -191,7 +192,7 @@ const onVerificationCodeChanged = (text: string) => {
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} disabled={true} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); setIsConfirmationCodeValid(null)}} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>
 
-        <Button style={styles.btnLogin} accessoryRight={LoadingIndicator} onPress={()=>{VerifyPress({username, confirmationCode}); setIsSignupButtonClicked(true);}} >{txtVERIFY}</Button>
+        <Button style={styles.btnLogin} accessoryRight={LoadingIndicator} onPress={()=>{VerifyPress({username, confirmationCode})}} >{txtVERIFY}</Button>
 
 
       </View>

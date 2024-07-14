@@ -6,6 +6,7 @@ import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop,
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import * as UserSettings from './AsyncStorage/user_settings';
 
+import { signIn } from 'aws-amplify/auth';
 
 //#region Icons & Accessories
 const TextIcon = (): IconElement => (
@@ -24,6 +25,7 @@ const CheckIcon = (isSelected: boolean): IconElement => ( isSelected?
 );
 //#endregion
 
+const regExUsername = /\s/g;
 
 const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
@@ -77,12 +79,13 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(GetSavedLanguage(global.lang_id)));
   //#endregion
 
-
   //#region References
   const languageFocusRef = useRef<any>(null); 
+  const usernameFocusRef = useRef<any>(null);
+  const passwordFocusRef = useRef<any>(null);
   //#endregion
 
-
+//#region Language Setting
   const SettingButtonPressed = () => {
     languageFocusRef.current?.focus();
   }
@@ -136,6 +139,44 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
     }
     return langId;
 }
+//#endregion
+
+  const LoginPress = async (data: any) => {
+    try
+    {
+
+      const {username, password} = data;
+
+      //#region Validations
+      if(username?.trim() == ""){
+        usernameFocusRef.current?.focus();
+        return;
+      }else if(regExUsername.test(username?.trim()) === true){
+        usernameFocusRef.current?.focus();
+        return;
+      }
+      if(password?.trim() == ""){
+        passwordFocusRef.current?.focus();
+        return;
+      }else if(password?.length < 8){
+        passwordFocusRef.current?.focus();
+        return;
+      }
+      //#endregion
+
+      const response = await signIn({
+        username,
+        password
+      });
+
+      console.log(await response);
+
+    }
+    catch (e: any)
+    {
+      console.log(e.toString());
+    }
+  }
 
   return (
     <GestureHandlerRootView>
@@ -164,15 +205,15 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
         <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../assets/images/logo.png')}/>
 
-        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ></Input>
-        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} ref={passwordFocusRef} secureTextEntry></Input>
 
         <View style={styles.viewFlexRow}>
             <CheckBox checked>{txtREMEMBER_ME}</CheckBox>
             <Text status="primary">{txtFORGOT_PASSWORD}</Text>
         </View>
 
-        <Button style={styles.btnLogin}>{txtLOGIN}</Button>
+        <Button style={styles.btnLogin} onPress={()=>{LoginPress({username, password})}}>{txtLOGIN}</Button>
         <Button style={styles.btnSignup} appearance="outline" onPress={()=>{navigation.navigate('Signup')}}>{txtSIGNUP}</Button>
 
 
