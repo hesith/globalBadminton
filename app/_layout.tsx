@@ -11,6 +11,8 @@ import Splash from './splash';
 import Login from './login';
 import Signup from './signup';
 import Verify from './verify';
+import Loading from './loading';
+import Home from './Screens/home';
 
 Amplify.configure(amplifyconfig);
 
@@ -28,6 +30,8 @@ const RootLayout = () => {
       
               <Stack.Navigator>
                   <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>
+                  <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
+                  <Stack.Screen name="Loading" component={Loading} options={{headerShown: false}}/>
                   <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
                   <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
                   <Stack.Screen name="Verify" component={Verify} options={{headerShown: false}}/>

@@ -73,9 +73,16 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   }
   //#endregion
   
+
+  const routedUsername = route.params?.username;
+  const routedPassword = route.params?.password;
+
   //#region Input States
-  const [username, setUsername] = useState(route.params?.username.trim() != "" ? route.params?.username : "");
-  const [password, setPassword] = useState(route.params?.password.trim() != "" ? route.params?.password : "");
+  const [username, setUsername] = useState(routedUsername != undefined ? routedUsername : "");
+  const [password, setPassword] = useState(routedPassword != undefined ? routedPassword : "");
+  const [rememberMe, setRememberMe] = React.useState(true);
+  const [shouldUseRoutedUsername, setShouldUseRoutedUsername] = useState(true);
+  const [shouldUseRoutedPasswpord, setShouldUseRoutedPassword] = useState(true);
   const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(GetSavedLanguage(global.lang_id)));
   //#endregion
 
@@ -144,8 +151,7 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const LoginPress = async (data: any) => {
     try
     {
-
-      const {username, password} = data;
+      var {username, password} = data; 
 
       //#region Validations
       if(username?.trim() == ""){
@@ -185,8 +191,8 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
 <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
     <Select style={styles.selectLanguageLogin} selectedIndex={selectedLang} value={MapLangId(selectedLang)} onSelect={index => LanguageSelected(index)} ref={languageFocusRef}>
-          <SelectItem style={styles.selectItemLanguageLogin} accessoryRight={CheckIcon((selectedLang as IndexPath).row == 0)} title={txtENGLISH}/>
-          <SelectItem style={styles.selectItemLanguageLogin} accessoryRight={CheckIcon((selectedLang as IndexPath).row == 1)} title={txtSINHALA} /> 
+          <SelectItem accessoryRight={CheckIcon((selectedLang as IndexPath).row == 0)} title={txtENGLISH}/>
+          <SelectItem accessoryRight={CheckIcon((selectedLang as IndexPath).row == 1)} title={txtSINHALA} /> 
     </Select>
 <Button style={styles.btnSettingLogin} appearance="ghost" accessoryRight={TextIcon} onPress={SettingButtonPressed}/>
 </View>
@@ -205,15 +211,16 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
         <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../assets/images/logo.png')}/>
 
-        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={route.params?.username} onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={route.params?.password} onChangeText={newText => setPassword(newText)} ref={passwordFocusRef} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={username} onChangeText={newText => {setUsername(newText); setShouldUseRoutedUsername(false);}} ref={usernameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} onChangeText={newText => {setPassword(newText); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>
 
         <View style={styles.viewFlexRow}>
-            <CheckBox checked>{txtREMEMBER_ME}</CheckBox>
+            <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} >{txtREMEMBER_ME}</CheckBox>
             <Text status="primary">{txtFORGOT_PASSWORD}</Text>
         </View>
 
-        <Button style={styles.btnLogin} onPress={()=>{LoginPress({username, password})}}>{txtLOGIN}</Button>
+        <Button style={styles.btnLogin} onPress={()=>{ LoginPress({username: shouldUseRoutedUsername? routedUsername : username, password: shouldUseRoutedPasswpord? routedPassword : password}); }}>{txtLOGIN}</Button>
+
         <Button style={styles.btnSignup} appearance="outline" onPress={()=>{navigation.navigate('Signup')}}>{txtSIGNUP}</Button>
 
 

@@ -20,3 +20,4 @@ export const getLangId = async () => {
       console.log(error);
     }
   };
+

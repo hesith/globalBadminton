@@ -94,7 +94,11 @@ export const styles = StyleSheet.create({
         opacity: 0,
         width: 120
     },
-    selectItemLanguageLogin: {
-  
+    spinnerLoading: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        borderWidth: 30,
+        borderStyle: 'dotted'
     }
   });

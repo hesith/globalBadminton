@@ -117,10 +117,11 @@ const LoadingIndicator = (props: any): React.ReactElement => isSignupButtonClick
 const onVerificationCodeChanged = (text: string) => {
   try
   {
+    setIsConfirmationCodeValid(null);
+
     if(regExVerficationCode.test(text.trim()) == true)
       {
         setConfirmationCode(text.trim());
-        console.log(confirmationCode);
       }
   }
   catch (e : any)
@@ -134,8 +135,6 @@ const onVerificationCodeChanged = (text: string) => {
       setIsSignupButtonClicked(true);
 
       const {username, confirmationCode} = data;
-
-      console.log(username);
 
       if(username.trim() == ""){
         usernameFocusRef.current?.focus();
@@ -190,7 +189,7 @@ const onVerificationCodeChanged = (text: string) => {
       <Text style={styles.h1} category="h1">{txtVERIFY}</Text>     
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} disabled={true} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); setIsConfirmationCodeValid(null)}} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); }} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>
 
         <Button style={styles.btnLogin} accessoryRight={LoadingIndicator} onPress={()=>{VerifyPress({username, confirmationCode})}} >{txtVERIFY}</Button>
 
