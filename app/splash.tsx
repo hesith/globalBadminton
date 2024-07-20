@@ -8,14 +8,13 @@ const Splash = ({navigation}: {navigation: any}) => {
     try
     {
 
-
         UserSettings.getLangId().then(id => {
 
             global.lang_id = id as string;
 
             getCurrentUser().then(success => {
 
-                navigation.navigate("Home");
+                navigation.navigate("Loading", {target: "Home"});
     
             }, reject => {
     

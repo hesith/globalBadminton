@@ -216,7 +216,7 @@ const renderUsernamePasswordCaption = () => {
       console.log(await response);
 
       if(await response.isSignedIn == true){
-        navigation.navigate("Home");
+        navigation.navigate("Loading", {target: "Home"});
       }
     }
     catch (e: any)
