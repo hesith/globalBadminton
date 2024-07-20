@@ -1,8 +1,8 @@
 import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, TouchableOpacity } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
-import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../../ShareResources/lang_resources";
+import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, INVALID_USERNAME_OR_PASSWORD, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../../ShareResources/lang_resources";
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import * as UserSettings from '../../AsyncStorage/user_settings';
 
@@ -48,6 +48,7 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const txtENGLISH = ENGLISH_inEnglish(lang_id);
   const txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
   const txtHAS_BEEN_SET = HAS_BEEN_SET_FullStop(lang_id);
+  const txtINVALID_USERNAME_OR_PASSWORD = INVALID_USERNAME_OR_PASSWORD(lang_id);
   const txtLOGIN = LOGIN(lang_id);
   const txtOK = OK(lang_id);
   const txtPASSWORD = PASSWORD(lang_id);
@@ -170,7 +171,7 @@ const renderUsernamePasswordCaption = () => {
     if(isLoginButtonClicked && !isUsernameOrPasswordValid){
       return(
         <Layout style={styles.labelLogin}>
-        <Text status="danger" category="p2">Invalid Username or Password</Text>
+        <Text status="danger" category="p2">{txtINVALID_USERNAME_OR_PASSWORD}</Text>
           <Button
           appearance='ghost'
           accessoryRight={CrossIcon}  
@@ -263,7 +264,8 @@ const renderUsernamePasswordCaption = () => {
 
         <View style={styles.viewFlexRow}>
             <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} >{txtREMEMBER_ME}</CheckBox>
-            <Text status="primary">{txtFORGOT_PASSWORD}</Text>
+            <Button status="primary" appearance="ghost" onPress={()=> navigation.navigate("ForgotPassword")}>{txtFORGOT_PASSWORD}</Button> 
+            {/* <Text status="primary">{txtFORGOT_PASSWORD}</Text> */}
         </View>
 
         <Button style={styles.btnLogin} onPress={()=>{ LoginPress({username: shouldUseRoutedUsername? routedUsername : username, password: shouldUseRoutedPasswpord? routedPassword : password}); }}>{txtLOGIN}</Button>

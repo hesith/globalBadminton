@@ -121,6 +121,16 @@ export function INVALID_EMAIL(lang_id: string | undefined){
             return "වලංගු නොවන විද්‍යුත් තැපෑලකි";
     }
 }
+export function INVALID_USERNAME_OR_PASSWORD(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Invalid Username or Password";
+        case "en":
+            return "Invalid Username or Password";
+        case "si":
+            return "වලංගු නොවන පරිශීලක නාමයක් හෝ මුරපදයකි";
+    }
+}
 export function LOGIN(lang_id: string | undefined){
     switch(lang_id){
         default:

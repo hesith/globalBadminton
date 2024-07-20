@@ -10,6 +10,7 @@ import amplifyconfig from '..//src/amplifyconfiguration.json';
 import Splash from './splash';
 import Login from './Screens/Authentication/login';
 import Signup from './Screens/Authentication/signup';
+import ForgotPassword from './Screens/Authentication/forgotPassword';
 import Verify from './Screens/Authentication/verify';
 import Loading from './loading';
 import Home from './Screens/home';
@@ -35,6 +36,7 @@ const RootLayout = () => {
                   <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
                   <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
                   <Stack.Screen name="Verify" component={Verify} options={{headerShown: false}}/>
+                  <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerShown: false}}/>
               </Stack.Navigator>
       
           </ApplicationProvider>
