@@ -1,10 +1,10 @@
 import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { styles } from "../styles/styles";
-import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../app/ShareResources/lang_resources";
+import { styles } from "../../../styles/styles";
+import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../../ShareResources/lang_resources";
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
-import * as UserSettings from './AsyncStorage/user_settings';
+import * as UserSettings from '../../AsyncStorage/user_settings';
 
 import { signIn } from 'aws-amplify/auth';
 
@@ -256,7 +256,7 @@ const renderUsernamePasswordCaption = () => {
 
       <View style={styles.viewFlexColumn}>
 
-        <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../assets/images/logo.png')}/>
+        <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../../../assets/images/logo.png')}/>
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={username} onChangeText={newText => {setUsername(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedUsername(false);}} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} caption={renderUsernamePasswordCaption} onChangeText={newText => {setPassword(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>

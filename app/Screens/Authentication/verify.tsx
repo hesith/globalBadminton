@@ -1,10 +1,10 @@
 import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { styles } from "../styles/styles";
+import { styles } from "../../../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner } from "@ui-kitten/components";
 import { confirmSignUp } from 'aws-amplify/auth';
-import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../app/ShareResources/lang_resources";
+import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../../../app/ShareResources/lang_resources";
 
 const regExVerficationCode = /^\d{0,6}$/;
 

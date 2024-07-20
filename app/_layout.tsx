@@ -8,9 +8,9 @@ import { Amplify } from 'aws-amplify';
 import amplifyconfig from '..//src/amplifyconfiguration.json';
 
 import Splash from './splash';
-import Login from './login';
-import Signup from './signup';
-import Verify from './verify';
+import Login from './Screens/Authentication/login';
+import Signup from './Screens/Authentication/signup';
+import Verify from './Screens/Authentication/verify';
 import Loading from './loading';
 import Home from './Screens/home';
 
