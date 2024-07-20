@@ -1,20 +1,32 @@
 import { styles } from "@/styles/styles";
 import { Avatar, Layout } from "@ui-kitten/components";
 import * as UserSettings from './AsyncStorage/user_settings';
-import { getCurrentUser, signOut } from "aws-amplify/auth";
+import { getCurrentUser } from "aws-amplify/auth";
 
 const Splash = ({navigation}: {navigation: any}) => {
 
     try
     {
+
+
         UserSettings.getLangId().then(id => {
 
             global.lang_id = id as string;
-            navigation.navigate("Login");
+
+            getCurrentUser().then(success => {
+
+                navigation.navigate("Home");
+    
+            }, reject => {
+    
+                navigation.navigate("Login");
+    
+            })
+
     
           });
 
-        getCurrentUser().then(user => console.log("user is ",user), err=> console.log(err));
+        
 
 
         return (

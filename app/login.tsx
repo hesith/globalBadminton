@@ -9,6 +9,13 @@ import * as UserSettings from './AsyncStorage/user_settings';
 import { signIn } from 'aws-amplify/auth';
 
 //#region Icons & Accessories
+const CrossIcon = (): IconElement => (
+  <Icon
+    fill="#DE4637"
+    name='close-circle-outline'
+    style = {styles.labelLoginIcon}
+  />
+);
 const TextIcon = (): IconElement => (
   <Icon
     fill="black"
@@ -22,6 +29,13 @@ const CheckIcon = (isSelected: boolean): IconElement => ( isSelected?
     name='checkmark'
     style = {styles.labelLoginIcon2}
   /> : <></>
+);
+const CheckIconGeneral = (): IconElement => (
+  <Icon
+    fill='#B6D93A'
+    name='checkmark-circle-2'
+    style = {styles.labelLoginIcon}
+  />
 );
 //#endregion
 
@@ -86,6 +100,9 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const [selectedLang, setSelectedLang] = useState<IndexPath | IndexPath[]>(new IndexPath(GetSavedLanguage(global.lang_id)));
   //#endregion
 
+  const [isLoginButtonClicked, setIsLoginButtonClicked] = useState(false);
+  const [isUsernameOrPasswordValid, setIsUsernameOrPasswordValid] = useState<any>(null);
+
   //#region References
   const languageFocusRef = useRef<any>(null); 
   const usernameFocusRef = useRef<any>(null);
@@ -148,9 +165,30 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 }
 //#endregion
 
+//#region Captions
+const renderUsernamePasswordCaption = () => {
+    if(isLoginButtonClicked && !isUsernameOrPasswordValid){
+      return(
+        <Layout style={styles.labelLogin}>
+        <Text status="danger" category="p2">Invalid Username or Password</Text>
+          <Button
+          appearance='ghost'
+          accessoryRight={CrossIcon}  
+        />
+        </Layout>
+        )
+    }
+    else{
+      return(<></>);
+    }
+};
+//#endregion
+
   const LoginPress = async (data: any) => {
     try
     {
+      setIsLoginButtonClicked(true);
+
       var {username, password} = data; 
 
       //#region Validations
@@ -164,23 +202,32 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
       if(password?.trim() == ""){
         passwordFocusRef.current?.focus();
         return;
-      }else if(password?.length < 8){
-        passwordFocusRef.current?.focus();
-        return;
       }
       //#endregion
 
       const response = await signIn({
         username,
-        password
+        password,
+        options: {
+          authFlowType: "USER_PASSWORD_AUTH",
+        }
       });
 
       console.log(await response);
 
+      if(await response.isSignedIn == true){
+        navigation.navigate("Home");
+      }
     }
     catch (e: any)
     {
       console.log(e.toString());
+
+      if((e.toString()).startsWith("UserNotFoundException") || e.toString().startsWith("NotAuthorizedException"))
+      {
+        setIsUsernameOrPasswordValid(false);
+      }
+  
     }
   }
 
@@ -211,8 +258,8 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
         <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../assets/images/logo.png')}/>
 
-        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={username} onChangeText={newText => {setUsername(newText); setShouldUseRoutedUsername(false);}} ref={usernameFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} onChangeText={newText => {setPassword(newText); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={username} onChangeText={newText => {setUsername(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedUsername(false);}} ref={usernameFocusRef}></Input>
+        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} caption={renderUsernamePasswordCaption} onChangeText={newText => {setPassword(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>
 
         <View style={styles.viewFlexRow}>
             <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} >{txtREMEMBER_ME}</CheckBox>
