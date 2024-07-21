@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner } from "@ui-kitten/components";
-import { confirmSignUp } from 'aws-amplify/auth';
-import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../../ShareResources/lang_resources";
+import { resetPassword } from 'aws-amplify/auth';
+import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, RESET_PASSWORD, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../../ShareResources/lang_resources";
 
 const regExVerficationCode = /^\d{0,6}$/;
 
@@ -14,6 +14,7 @@ const ForgotPassword = ({navigation, route}: {navigation: any, route: any}) => {
   const[lang_id, setLanguageId] = useState(global.lang_id);
   const txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST = ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id);
   const txtCANCEL = CANCEL(lang_id);
+  const txtRESET_PASSWORD = RESET_PASSWORD(lang_id);
   const txtSTART_OVER = START_OVER_QuestionMark(lang_id);
   const txtUSERNAME = USERNAME(lang_id);
   const txtVERIFIED = VERIFIED(lang_id);
@@ -26,14 +27,7 @@ const ForgotPassword = ({navigation, route}: {navigation: any, route: any}) => {
   //#region BackHandler
   useEffect(() => {
     const backAction = () => {
-      Alert.alert(txtSTART_OVER, txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST, [
-        {
-          text: txtCANCEL,
-          onPress: () => null,
-          style: 'cancel',
-        },
-        {text: txtYES, onPress: () => navigation.navigate("Login")},
-      ]);
+      navigation.goBack();
       return true;
     };
 
@@ -148,12 +142,13 @@ const onVerificationCodeChanged = (text: string) => {
         return;
       }
 
-      const response = await confirmSignUp({
-        username, 
-        confirmationCode
+      const response = await resetPassword({
+        username
       });
       
-      if(await response.isSignUpComplete)
+      console.log(await response);
+
+      if(await response.isPasswordReset)
       {
         setIsConfirmationCodeValid(true);
         setIsSignupButtonClicked(false);
@@ -186,7 +181,7 @@ const onVerificationCodeChanged = (text: string) => {
     >
 
       <View style={styles.viewFlexColumn}>
-      <Text style={styles.h1} category="h1">Reset Password</Text>     
+      <Text style={styles.h1} category="h1">{txtRESET_PASSWORD}</Text>     
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} disabled={true} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); }} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>

@@ -11,6 +11,16 @@ export function ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_Question
             return "ඔබ ඇතුළු කර ඇති සියල්ල අහිමි වනු ඇත. ඔබට විශ්වාස ද?";
     }
 }
+export function ATTEMPT_LIMIT_EXCEEDED(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Attempt limit exceeded";
+        case "en":
+            return "Attempt limit exceeded";
+        case "si":
+            return "උත්සාහ සීමාව ඉක්මවා ඇත";
+    }
+}
 export function CANCEL(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -221,6 +231,16 @@ export function PLAYER_NAME(lang_id: string | undefined){
             return "ක්රීඩකයාගේ නම";
     }
 }
+export function PLEASE_ENTER_USERNAME_CORRECTLY_FullStop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Please enter Username correctly.";
+        case "en":
+            return "Please enter Username correctly.";
+        case "si":
+            return "කරුණාකර පරිශීලක නාමය නිවැරදිව ඇතුළත් කරන්න.";
+    }
+}
 export function PLEASE_RESTART_THE_APPLICATION_FullStop(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -231,6 +251,16 @@ export function PLEASE_RESTART_THE_APPLICATION_FullStop(lang_id: string | undefi
             return "කරුණාකර යෙදුම නැවත ආරම්භ කරන්න.";
     }
 }
+export function PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Please try again after some time.";
+        case "en":
+            return "Please try again after some time.";
+        case "si":
+            return "කරුණාකර ටික වේලාවකට පසු නැවත උත්සාහ කරන්න.";
+    }
+}
 export function REMEMBER_ME(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -239,6 +269,16 @@ export function REMEMBER_ME(lang_id: string | undefined){
             return "Remember Me";
         case "si":
             return "මාව මතක තබා ගන්න";
+    }
+}
+export function RESET_PASSWORD(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Reset Password";
+        case "en":
+            return "Reset Password";
+        case "si":
+            return "මුරපදය නැවත සකසන්න";
     }
 }
 export function SIGNUP(lang_id: string | undefined){
@@ -279,6 +319,26 @@ export function USERNAME(lang_id: string | undefined){
             return "Username";
         case "si":
             return "පරිශීලක නාමය";
+    }
+}
+export function USER_NOT_FOUND(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "User not found";
+        case "en":
+            return "User not found";
+        case "si":
+            return "පරිශීලක හමු නොවීය";
+    }
+}
+export function USERNAME_CAN_NOT_BE_EMPTY_Fullstop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Username can not be empty.";
+        case "en":
+            return "Username can not be empty.";
+        case "si":
+            return "පරිශීලක නාමය හිස් විය නොහැක.";
     }
 }
 export function USERNAME_CAN_NOT_CONTAIN_SPACES(lang_id: string | undefined){

@@ -1,12 +1,12 @@
 import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
-import { GestureHandlerRootView, TouchableOpacity } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
-import { ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, INVALID_USERNAME_OR_PASSWORD, LOGIN, OK, PASSWORD, PLEASE_RESTART_THE_APPLICATION_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USERNAME} from "../../ShareResources/lang_resources";
+import { ATTEMPT_LIMIT_EXCEEDED, ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, INVALID_USERNAME_OR_PASSWORD, LOGIN, OK, PASSWORD, PLEASE_ENTER_USERNAME_CORRECTLY_FullStop, PLEASE_RESTART_THE_APPLICATION_FullStop, PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USER_NOT_FOUND, USERNAME, USERNAME_CAN_NOT_BE_EMPTY_Fullstop} from "../../ShareResources/lang_resources";
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import * as UserSettings from '../../AsyncStorage/user_settings';
 
-import { signIn } from 'aws-amplify/auth';
+import { resetPassword, signIn } from 'aws-amplify/auth';
 
 //#region Icons & Accessories
 const CrossIcon = (): IconElement => (
@@ -45,6 +45,7 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
   //#region LANGUAGE
   const[lang_id, setLanguageId] = useState(global.lang_id);
+  const txtATTEMPT_LIMIT_EXCEEDED = ATTEMPT_LIMIT_EXCEEDED(lang_id);
   const txtENGLISH = ENGLISH_inEnglish(lang_id);
   const txtFORGOT_PASSWORD = FORGOT_PASSWORD_QuestionMark(lang_id);
   const txtHAS_BEEN_SET = HAS_BEEN_SET_FullStop(lang_id);
@@ -52,11 +53,15 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const txtLOGIN = LOGIN(lang_id);
   const txtOK = OK(lang_id);
   const txtPASSWORD = PASSWORD(lang_id);
+  const txtPLEASE_ENTER_USERNAME_CORRECTLY = PLEASE_ENTER_USERNAME_CORRECTLY_FullStop(lang_id);
   const txtPLEASE_RESTART_THE_APPLICATION = PLEASE_RESTART_THE_APPLICATION_FullStop(lang_id);
+  const txtPLEASE_TRY_AGAIN_AFTER_SOME_TIME = PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop(lang_id);
   const txtREMEMBER_ME = REMEMBER_ME(lang_id);
   const txtSIGNUP = SIGNUP(lang_id);
   const txtSINHALA = SINHALA_inSinhala(lang_id);
   const txtUSERNAME = USERNAME(lang_id);
+  const txtUSERNAME_CAN_NOT_BE_EMPTY = USERNAME_CAN_NOT_BE_EMPTY_Fullstop(lang_id);
+  const txtUSER_NOT_FOUND = USER_NOT_FOUND(lang_id);
   //#endregion
 
   //#region BackHandler
@@ -232,6 +237,65 @@ const renderUsernamePasswordCaption = () => {
     }
   }
 
+  const ForgotPasswordPress = async () => {
+    try
+    {
+      //#region Validations
+      if(username?.trim() == ""){
+        usernameFocusRef.current?.focus();
+        Alert.alert("", txtUSERNAME_CAN_NOT_BE_EMPTY, [
+          {
+            text: txtOK,
+            onPress: () => usernameFocusRef.current?.focus(),
+            style: 'cancel',
+          }
+        ]);
+        return;
+      }else if(regExUsername.test(username?.trim()) === true){
+        usernameFocusRef.current?.focus();
+        return;
+      }
+      //#endregion
+
+      const response = await resetPassword({
+        username
+      });
+
+      console.log(await response);
+
+      if(await response.nextStep?.resetPasswordStep == "CONFIRM_RESET_PASSWORD_WITH_CODE")
+      {
+        navigation.navigate("ForgotPassword", username);
+      }
+
+    }
+    catch (e: any)
+    {
+      console.log(e.toString());
+
+      if((e.toString()).startsWith("UserNotFoundException"))
+      {
+          Alert.alert(txtUSER_NOT_FOUND, txtPLEASE_ENTER_USERNAME_CORRECTLY, [
+            {
+              text: txtOK,
+              onPress: () => usernameFocusRef.current?.focus(),
+              style: 'cancel',
+            }
+          ]);
+      }
+      else if((e.toString()).startsWith("LimitExceededException"))
+        {
+            Alert.alert(txtATTEMPT_LIMIT_EXCEEDED, txtPLEASE_TRY_AGAIN_AFTER_SOME_TIME, [
+              {
+                text: txtOK,
+                onPress: () => usernameFocusRef.current?.focus(),
+                style: 'cancel',
+              }
+            ]);
+        }
+    }
+  }
+
   return (
     <GestureHandlerRootView>
 
@@ -263,9 +327,8 @@ const renderUsernamePasswordCaption = () => {
         <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} caption={renderUsernamePasswordCaption} onChangeText={newText => {setPassword(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>
 
         <View style={styles.viewFlexRow}>
-            <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} >{txtREMEMBER_ME}</CheckBox>
-            <Button status="primary" appearance="ghost" onPress={()=> navigation.navigate("ForgotPassword")}>{txtFORGOT_PASSWORD}</Button> 
-            {/* <Text status="primary">{txtFORGOT_PASSWORD}</Text> */}
+            <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} ><Text status="primary">{txtREMEMBER_ME}</Text></CheckBox>
+            <Button status="primary" appearance="ghost" onPress={()=> ForgotPasswordPress()}>{txtFORGOT_PASSWORD}</Button> 
         </View>
 
         <Button style={styles.btnLogin} onPress={()=>{ LoginPress({username: shouldUseRoutedUsername? routedUsername : username, password: shouldUseRoutedPasswpord? routedPassword : password}); }}>{txtLOGIN}</Button>
