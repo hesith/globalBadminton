@@ -5,7 +5,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { default as theme } from '../styles/theme1.json'; 
 import { Amplify } from 'aws-amplify';
-import amplifyconfig from '..//src/amplifyconfiguration.json';
+import amplifyconfig from '../src/amplifyconfiguration.json';
 
 import Splash from './splash';
 import Login from './Screens/Authentication/login';
