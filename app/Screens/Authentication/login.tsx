@@ -321,7 +321,7 @@ const renderUsernamePasswordCaption = () => {
 
       <View style={styles.viewFlexColumn}>
 
-        <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../../../assets/images/logo.png')}/>
+        <Avatar style={styles.logoLogin} size="large" shape="square" source={require('../../../assets/images/logowithtext.png')}/>
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} status="primary" value={username} onChangeText={newText => {setUsername(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedUsername(false);}} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" value={password} caption={renderUsernamePasswordCaption} onChangeText={newText => {setPassword(newText); setIsLoginButtonClicked(false); setIsUsernameOrPasswordValid(true); setShouldUseRoutedPassword(false);}} ref={passwordFocusRef} secureTextEntry></Input>

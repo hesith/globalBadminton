@@ -71,7 +71,7 @@ export const styles = StyleSheet.create({
       color: 'white'
     },
     logoLogin: {
-        marginBottom: 10,
+        marginBottom: 40,
         marginTop: 10,
         width: 200,
         height: 200

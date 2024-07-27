@@ -270,7 +270,7 @@ const signupPress = async (data:any) =>{
 
         if(await response.userId?.toString().trim() != null && await response.nextStep?.signUpStep == "CONFIRM_SIGN_UP")
         {
-          navigation.navigate('Verify', {username, password});
+          navigation.navigate('Verify', {username:username, password:password});
         }
     }catch(e: any)
     {
