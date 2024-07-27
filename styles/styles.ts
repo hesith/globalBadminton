@@ -4,6 +4,14 @@ export const styles = StyleSheet.create({
     h1:{
         marginVertical: 10
     },
+    c2:{
+        marginVertical: 10,
+        width: '70%',
+        textAlign: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center'
+    },
     divider:{
         alignSelf: "stretch",
         marginVertical: 10
@@ -42,7 +50,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignContent: 'center',
-        marginTop: 10
+        marginTop: 10,
     },
     popoverAnchor:{
         opacity: 0
@@ -62,9 +70,12 @@ export const styles = StyleSheet.create({
         height: 30
     },    
     labelLoginIcon2:{
+        width: 20,    
+        height: 20
+    },backIcon:{
         width: 20,
         height: 20
-    },
+    }, 
     indicator: {
       justifyContent: 'center',
       alignItems: 'center',
@@ -100,5 +111,10 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 30,
         borderStyle: 'dotted'
+    },
+    versionText: {
+        alignSelf: 'flex-end',
+        marginRight: 10,
+        opacity: 0.5
     }
   });

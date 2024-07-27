@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect} from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner , Select, SelectItem, IndexPath, Divider } from "@ui-kitten/components";
-import { CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, EMAIL_ALREADY_EXISTS, FEMALE, GENDER, INVALID_EMAIL, MALE, MATCH, OTHER, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PLAYER_NAME, SIGNUP, USERNAME, USERNAME_CAN_NOT_CONTAIN_SPACES} from "../../../app/ShareResources/lang_resources";
+import { BACK, CONFIRM_PASSWORD, DOES_NOT_MATCH, EMAIL, EMAIL_ALREADY_EXISTS, FEMALE, GENDER, INVALID_EMAIL, MALE, MATCH, OTHER, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PLAYER_NAME, SIGNUP, USERNAME, USERNAME_CAN_NOT_CONTAIN_SPACES} from "../../../app/ShareResources/lang_resources";
 
 import { signUp } from 'aws-amplify/auth';
 
@@ -14,6 +14,7 @@ const Signup = ({navigation}: {navigation: any}) => {
 
 // //#region LANGUAGE
 const[lang_id, setLanguageId] = useState(global.lang_id);
+const txtBACK = BACK(lang_id);
 const txtCONFIRM_PASSWORD = CONFIRM_PASSWORD(lang_id);
 const txtEMAIL = EMAIL(lang_id);
 const txtEMAIL_ALREADY_EXISTS = EMAIL_ALREADY_EXISTS(lang_id);
@@ -71,6 +72,13 @@ const txtUSERNAME_CAN_NOT_CONTAIN_SPACES = USERNAME_CAN_NOT_CONTAIN_SPACES(lang_
 //#endregion
 
 //#region Icons & Accessories
+const BackIcon = (): IconElement => (
+  <Icon
+    fill="#7900D2"
+    name='arrow-back'
+    style = {styles.backIcon}
+  />
+);
   const CrossIcon = (): IconElement => (
     <Icon
       fill="#DE4637"
@@ -358,6 +366,10 @@ const signupPress = async (data:any) =>{
         <Button style={styles.btnSignup} accessoryRight={LoadingIndicator} onPress={() => {            
           signupPress({name, email, genderSelectedIndex, username, password, confirmPassword})
         }}>{txtSIGNUP}</Button>
+
+        <Button style={styles.btnSignup} accessoryLeft={BackIcon} appearance="ghost" onPress={() => {            
+                navigation.goBack();
+        }}>{txtBACK}</Button>
 
       </View>   
     </View>

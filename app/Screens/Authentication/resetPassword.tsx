@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner } from "@ui-kitten/components";
 import { confirmResetPassword } from 'aws-amplify/auth';
-import { ATTEMPT_LIMIT_EXCEEDED, CONFIRM_PASSWORD, DOES_NOT_MATCH, MATCH, OK, PASSWORD, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PASSWORD_RESET_SUCCESSFUL_Fullstop, PASSWORD_RESET_UNSUCCESSFUL_Fullstop, PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop, RESET, RESET_PASSWORD, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED } from "../../ShareResources/lang_resources";
+import { ATTEMPT_LIMIT_EXCEEDED, CONFIRM_PASSWORD, DOES_NOT_MATCH, MATCH, NEW_PASSWORD, OK, PASSWORD_Colon_STRONG, PASSWORD_Colon_WEAK, PASSWORD_RESET_SUCCESSFUL_Fullstop, PASSWORD_RESET_UNSUCCESSFUL_Fullstop, PLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS_FullStop, PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop, RESET, RESET_PASSWORD, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED } from "../../ShareResources/lang_resources";
 
 const regExVerficationCode = /^\d{0,6}$/;
 
@@ -16,11 +16,12 @@ const ResetPassword = ({navigation, route}: {navigation: any, route: any}) => {
   const txtDOES_NOT_MATCH = DOES_NOT_MATCH(lang_id);
   const txtMATCH = MATCH(lang_id);
   const txtOK = OK(lang_id);
-  const txtPASSWORD = PASSWORD(lang_id);
+  const txtNEW_PASSWORD = NEW_PASSWORD(lang_id);
   const txtPASSWORD_RESET_SUCCESSFUL = PASSWORD_RESET_SUCCESSFUL_Fullstop(lang_id);
   const txtPASSWORD_RESET_UNSUCCESSFUL = PASSWORD_RESET_UNSUCCESSFUL_Fullstop(lang_id);
   const txtPASSWORD_STRONG = PASSWORD_Colon_STRONG(lang_id);
   const txtPASSWORD_WEAK = PASSWORD_Colon_WEAK(lang_id);
+  const txtPLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS = PLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS_FullStop(lang_id);
   const txtPLEASE_TRY_AGAIN_AFTER_SOME_TIME = PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop(lang_id);
   const txtRESET = RESET(lang_id);
   const txtRESET_PASSWORD = RESET_PASSWORD(lang_id);
@@ -317,11 +318,15 @@ const onVerificationCodeChanged = (text: string) => {
     >
 
       <View style={styles.viewFlexColumn}>
-      <Text style={styles.h1} category="h1">{txtRESET_PASSWORD}</Text>     
+      <Text style={styles.h1} category="h1">{txtRESET_PASSWORD}</Text>
+
+      <View style={styles.c2}>      
+        <Text category="c2">{txtPLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS}</Text>      
+      </View>
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} disabled={true} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); }} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>
-        <Input style={styles.textInputLogin} placeholder={txtPASSWORD} status="primary" caption={renderPasswordCaption} onChangeText={newText => {setNewPassword(newText); setIsResetButtonClicked(false);}} ref={passwordFocusRef} secureTextEntry></Input>
+        <Input style={styles.textInputLogin} placeholder={txtNEW_PASSWORD} status="primary" caption={renderPasswordCaption} onChangeText={newText => {setNewPassword(newText); setIsResetButtonClicked(false);}} ref={passwordFocusRef} secureTextEntry></Input>
         <Input style={styles.textInputLogin} placeholder={txtCONFIRM_PASSWORD} status="primary" caption={renderConfirmPasswordCaption} onChangeText={newText => setConfirmPassword(newText)} ref={confPasswordFocusRef} secureTextEntry></Input>
 
         <Button style={styles.btnLogin} accessoryRight={LoadingIndicator} onPress={()=>{VerifyPress({username, confirmationCode, newPassword})}} >{txtRESET}</Button>

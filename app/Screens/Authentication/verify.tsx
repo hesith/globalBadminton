@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
 import { Input, Text, Layout, Button, Icon, IconElement, Spinner } from "@ui-kitten/components";
 import { confirmSignUp } from 'aws-amplify/auth';
-import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../../../app/ShareResources/lang_resources";
+import { ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark, CANCEL, PLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS_FullStop, START_OVER_QuestionMark, USERNAME, VERIFICATION_CODE, VERIFICATION_CODE_INVALID, VERIFIED, VERIFY, YES_Uppercase } from "../../../app/ShareResources/lang_resources";
 
 const regExVerficationCode = /^\d{0,6}$/;
 
@@ -14,6 +14,7 @@ const Verify = ({navigation, route}: {navigation: any, route: any}) => {
   const[lang_id, setLanguageId] = useState(global.lang_id);
   const txtALL_YOU_HAVE_ENTERED_WILL_BE_LOST = ALL_YOU_HAVE_ENTERED_WILL_BE_LOST_FullStop_ARE_YOU_SURE_QuestionMark(lang_id);
   const txtCANCEL = CANCEL(lang_id);
+  const txtPLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS = PLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS_FullStop(lang_id);
   const txtSTART_OVER = START_OVER_QuestionMark(lang_id);
   const txtUSERNAME = USERNAME(lang_id);
   const txtVERIFIED = VERIFIED(lang_id);
@@ -187,6 +188,10 @@ const onVerificationCodeChanged = (text: string) => {
 
       <View style={styles.viewFlexColumn}>
       <Text style={styles.h1} category="h1">{txtVERIFY}</Text>     
+
+        <View style={styles.c2}>      
+          <Text category="c2">{txtPLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS}</Text>      
+        </View>
 
         <Input style={styles.textInputLogin} placeholder={txtUSERNAME} disabled={true} value={route.params?.username} status="primary" onChangeText={newText => setUsername(newText)} ref={usernameFocusRef}></Input>
         <Input style={styles.textInputLogin} placeholder={txtVERIFICATION_CODE} maxLength={6} caption={renderVeificationCodeCaption} status="primary" onChangeText={newText => {onVerificationCodeChanged(newText); }} value={confirmationCode} ref={confirmationCodeFocusRef}></Input>

@@ -2,6 +2,7 @@ import { styles } from "@/styles/styles";
 import { Avatar, Layout } from "@ui-kitten/components";
 import * as UserSettings from './AsyncStorage/user_settings';
 import { getCurrentUser } from "aws-amplify/auth";
+import Constants from 'expo-constants'; 
 
 const Splash = ({navigation}: {navigation: any}) => {
 
@@ -11,6 +12,7 @@ const Splash = ({navigation}: {navigation: any}) => {
         UserSettings.getLangId().then(id => {
 
             global.lang_id = id as string;
+            global.app_version = Constants.expoConfig?.version;
 
             getCurrentUser().then(success => {
 

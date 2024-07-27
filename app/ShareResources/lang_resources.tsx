@@ -21,6 +21,16 @@ export function ATTEMPT_LIMIT_EXCEEDED(lang_id: string | undefined){
             return "උත්සාහ සීමාව ඉක්මවා ඇත";
     }
 }
+export function BACK(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Back";
+        case "en":
+            return "Back";
+        case "si":
+            return "ආපසු";
+    }
+}
 export function CANCEL(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -171,6 +181,16 @@ export function MATCH(lang_id: string | undefined){
             return "ගැලපේ";
     }
 }
+export function NEW_PASSWORD(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "New Password";
+        case "en":
+            return "New Password";
+        case "si":
+            return "අලුත් මුරපදය";
+    }
+}
 export function OK(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -249,6 +269,16 @@ export function PLAYER_NAME(lang_id: string | undefined){
             return "Player Name";
         case "si":
             return "ක්රීඩකයාගේ නම";
+    }
+}
+export function PLEASE_ENTER_THE_VERIFICATION_CODE_WHICH_HAS_BEEN_SENT_TO_YOUR_EMAIL_ADDRESS_FullStop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Please enter the Verification code which has been sent to your Email address.";
+        case "en":
+            return "Please enter the Verification code which has been sent to your Email address.";
+        case "si":
+            return "කරුණාකර ඔබගේ විද්‍යුත් තැපැල් ලිපිනයට යවා ඇති සත්‍යාපන කේතය ඇතුලත් කරන්න.";
     }
 }
 export function PLEASE_ENTER_USERNAME_CORRECTLY_FullStop(lang_id: string | undefined){
@@ -419,6 +449,16 @@ export function VERIFICATION_CODE_INVALID(lang_id: string | undefined){
             return "Verification Code Invalid";
         case "si":
             return "සත්‍යාපන කේතය වලංගු නැත";
+    }
+}
+export function VERSION(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Version";
+        case "en":
+            return "Version";
+        case "si":
+            return "පිටපත";
     }
 }
 export function YES_Uppercase(lang_id: string | undefined){

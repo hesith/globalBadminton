@@ -2,7 +2,7 @@ import { View, BackHandler, Alert } from "react-native";
 import React, { useState, useEffect, useRef } from 'react';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { styles } from "../../../styles/styles";
-import { ATTEMPT_LIMIT_EXCEEDED, ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, INVALID_USERNAME_OR_PASSWORD, LOGIN, OK, PASSWORD, PLEASE_ENTER_USERNAME_CORRECTLY_FullStop, PLEASE_RESTART_THE_APPLICATION_FullStop, PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USER_NOT_FOUND, USERNAME, USERNAME_CAN_NOT_BE_EMPTY_Fullstop} from "../../ShareResources/lang_resources";
+import { ATTEMPT_LIMIT_EXCEEDED, ENGLISH_inEnglish, FORGOT_PASSWORD_QuestionMark, HAS_BEEN_SET_FullStop, INVALID_USERNAME_OR_PASSWORD, LOGIN, OK, PASSWORD, PLEASE_ENTER_USERNAME_CORRECTLY_FullStop, PLEASE_RESTART_THE_APPLICATION_FullStop, PLEASE_TRY_AGAIN_AFTER_SOME_TIME_FullStop, REMEMBER_ME, SIGNUP, SINHALA_inSinhala, USER_NOT_FOUND, USERNAME, USERNAME_CAN_NOT_BE_EMPTY_Fullstop, VERSION} from "../../ShareResources/lang_resources";
 import { Input, Text, Layout, Button, CheckBox, Avatar, Icon, IconElement, Select, SelectItem, IndexPath } from "@ui-kitten/components";
 import * as UserSettings from '../../AsyncStorage/user_settings';
 
@@ -62,6 +62,7 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
   const txtUSERNAME = USERNAME(lang_id);
   const txtUSERNAME_CAN_NOT_BE_EMPTY = USERNAME_CAN_NOT_BE_EMPTY_Fullstop(lang_id);
   const txtUSER_NOT_FOUND = USER_NOT_FOUND(lang_id);
+  const txtVERSION = VERSION(lang_id);
   //#endregion
 
   //#region BackHandler
@@ -96,6 +97,8 @@ const Login = ({navigation, route}: {navigation: any, route: any}) => {
 
   const routedUsername = route.params?.username;
   const routedPassword = route.params?.password;
+
+  const version = txtVERSION + " : " + global.app_version;
 
   //#region Input States
   const [username, setUsername] = useState(routedUsername != undefined ? routedUsername : "");
@@ -198,14 +201,14 @@ const renderUsernamePasswordCaption = () => {
       var {username, password} = data; 
 
       //#region Validations
-      if(username?.trim() == ""){
+      if(username?.trim() == "" || username?.trim() == undefined){
         usernameFocusRef.current?.focus();
         return;
       }else if(regExUsername.test(username?.trim()) === true){
         usernameFocusRef.current?.focus();
         return;
       }
-      if(password?.trim() == ""){
+      if(password?.trim() == "" || password?.trim() == undefined){
         passwordFocusRef.current?.focus();
         return;
       }
@@ -328,7 +331,7 @@ const renderUsernamePasswordCaption = () => {
 
         <View style={styles.viewFlexRow}>
             <CheckBox checked={rememberMe} onChange={value => {setRememberMe(value)}} ><Text status="primary">{txtREMEMBER_ME}</Text></CheckBox>
-            <Button status="primary" appearance="ghost" onPress={()=> ForgotPasswordPress()}>{txtFORGOT_PASSWORD}</Button> 
+            <Button size="small" status="primary" appearance="ghost" onPress={()=> ForgotPasswordPress()}>{txtFORGOT_PASSWORD}</Button> 
         </View>
 
         <Button style={styles.btnLogin} onPress={()=>{ LoginPress({username: shouldUseRoutedUsername? routedUsername : username, password: shouldUseRoutedPasswpord? routedPassword : password}); }}>{txtLOGIN}</Button>
@@ -340,6 +343,10 @@ const renderUsernamePasswordCaption = () => {
 
      
     </View>
+
+    <Text style={styles.versionText} category='c1'>{version}</Text>
+
+
     </Layout>
     </GestureHandlerRootView>
 
