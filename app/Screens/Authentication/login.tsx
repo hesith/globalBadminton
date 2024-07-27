@@ -265,7 +265,7 @@ const renderUsernamePasswordCaption = () => {
 
       if(await response.nextStep?.resetPasswordStep == "CONFIRM_RESET_PASSWORD_WITH_CODE")
       {
-        navigation.navigate("ForgotPassword", username);
+        navigation.navigate("ResetPassword", {username: username});
       }
 
     }

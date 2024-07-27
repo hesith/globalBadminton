@@ -221,6 +221,26 @@ export function PASSWORD_Colon_WEAK(lang_id: string | undefined){
             return "මුරපදය :     දුර්වලයි";
     }
 }
+export function PASSWORD_RESET_SUCCESSFUL_Fullstop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Password Reset Successful.";
+        case "en":
+            return "Password Reset Successful.";
+        case "si":
+            return "මුරපදය යළි පිහිටුවීම සාර්ථකයි.";
+    }
+}
+export function PASSWORD_RESET_UNSUCCESSFUL_Fullstop(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Password Reset Unsuccessful.";
+        case "en":
+            return "Password Reset Unsuccessful.";
+        case "si":
+            return "මුරපදය යළි පිහිටුවීම අසාර්ථකයි.";
+    }
+}
 export function PLAYER_NAME(lang_id: string | undefined){
     switch(lang_id){
         default:
@@ -269,6 +289,16 @@ export function REMEMBER_ME(lang_id: string | undefined){
             return "Remember Me";
         case "si":
             return "මාව මතක තබා ගන්න";
+    }
+}
+export function RESET(lang_id: string | undefined){
+    switch(lang_id){
+        default:
+            return "Reset";
+        case "en":
+            return "Reset";
+        case "si":
+            return "නැවත සකසන්න";
     }
 }
 export function RESET_PASSWORD(lang_id: string | undefined){
